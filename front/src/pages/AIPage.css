@@ -1,0 +1,130 @@
+.AI-page {
+  margin: 0 auto;
+}
+.AI-hero-section {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.AI-hero-title {
+    margin-top:70px;
+    font-size: 40px;
+    color: #cfae44;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.AI-hero-subtitle {
+  font-size: 20px;
+  color: rgb(73, 73, 73);
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight:700;
+}
+
+.foto-section{
+    max-width: 500px;
+    margin: auto;
+    text-align: left;
+}
+.foto-title{
+    font-weight:700;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.foto{
+    padding: 70px 70px 70px 70px;
+    background-color: rgb(246, 246, 246);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border: 3px rgb(153, 153, 153);
+    border-style: dotted;
+}
+.AI-btn{
+    display: inline-block;
+    background-color: #cfae44;
+    color: white;
+    padding: 20px 100px 20px 100px;
+    border-radius: 80px;
+    text-decoration: none;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.AI-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+
+.foto-hint {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 15px 0;
+  font-style: italic;
+}
+
+.foto-preview {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.preview-img {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #0b400a;
+}
+
+.change-photo-btn-ai {
+    background: none;
+    border: 2px solid #0b400a;
+    color: #0b400a;
+    padding: 8px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+.button-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.change-photo-btn-ai:hover {
+    background: #0b400a;
+    color: white;
+    border: 2px solid #0b400a;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.foto {
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.foto:hover {
+    background-color: #f0f0f0;
+    border-color: #0b400a;
+}
+
+.AI-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #ccc;
+}

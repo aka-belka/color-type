@@ -1,0 +1,153 @@
+.home-page {
+  margin: 0 auto;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.hero-title {
+  font-size: 60px;
+  color: #cfae44;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 25px;
+  color: #0b400a;
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight:700;
+}
+
+.hero-tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.tag {
+  color: black;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.selection-section {
+  margin-bottom: 60px;
+}
+
+.selection-cards {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.selection-card {
+  flex: 1;
+  max-width: 500px;
+  background: white;
+  padding: 40px;
+  text-align: center;
+}
+
+.card-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.title-selection{
+  color: white;
+  margin-bottom: 15px;
+  font-size: 15px;
+  padding: 40px;
+}
+
+.selection-card p {
+  color: black;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.card-btn1 {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  padding: 25px 25px 25px 25px;
+  border-radius: 80px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+.card-btn2 {
+  display: inline-block;
+  background-color: #cfae44;
+  color: white;
+  padding: 25px 25px 25px 25px;
+  border-radius: 80px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.card-btn2:hover {
+  background-color: #857131;
+}
+.card-btn1:hover {
+  background-color: #32302b;
+}
+.how-it-works {
+  background-color: #0b400a;
+  padding: 40px;
+  margin-top: 60px;
+}
+
+.how-it-works h2 {
+  color: white;
+  font-size: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.how-it-works-text {
+  color: white;
+  line-height: 1.8;
+  font-size: 17px;
+  max-width: 900px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.cta-section {
+  text-align: center;
+  background: white;
+  padding: 30px;
+}
+
+.cta-section h3 {
+  color: black;
+  font-size: 18px;
+}
+
+.cta-btn {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  padding: 20px 80px 20px 80px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background-color 0.3s;
+}
+
+.cta-btn:hover {
+  background-color: #32302b;
+}
