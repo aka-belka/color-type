@@ -1,0 +1,130 @@
+.login-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-container {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 450px;
+  margin-top: 40px;
+  padding-top: 0px;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #0b400a;
+  font-size: 28px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align:left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #0b400a;
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+}
+
+.form-group input.error {
+  border-color: #ff4757;
+}
+
+.error-text {
+  color: #ff4757;
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+.error-message {
+  background: #bd818137;
+  color: #de2938;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #cfae44;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+}
+.password input{
+    background-color: #bdb08133;
+}
+.toggle-mode {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #cfae44;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.toggle-btn:hover {
+  text-decoration: underline;
+}
+
+.gender-group {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+}
+
+.gender-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.gender-label input[type="radio"] {
+  width: auto;
+  margin-right: 5px;
+}
+

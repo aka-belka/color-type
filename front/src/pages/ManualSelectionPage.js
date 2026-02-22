@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './ManualSelectionPage.css';
 import FotoImage from '../assets/foto.png';
+
 const ManualSelectionPage = () => {
+  const { isLoggedIn, user } = useAuth(); // Берем isLoggedIn из AuthContext
+  const navigate = useNavigate();
+  
   const [selectedColor, setSelectedColor] = useState('#cfae44');
   const [activeColorIndex, setActiveColorIndex] = useState(0);
   const [customPalette, setCustomPalette] = useState(['#cfae44', '#FF4757', '#2ED573', '#FFC312', '#AA80F9']);
@@ -11,8 +17,17 @@ const ManualSelectionPage = () => {
   const [savedPalettes, setSavedPalettes] = useState([]);
   const [paletteName, setPaletteName] = useState('');
   const [userPhoto, setUserPhoto] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  // Загружаем сохраненные палитры пользователя при входе
+  useEffect(() => {
+    if (isLoggedIn && user) {
+      const userPalettes = JSON.parse(localStorage.getItem(`palettes_${user.id}`)) || [];
+      setSavedPalettes(userPalettes);
+    } else {
+      setSavedPalettes([]);
+    }
+  }, [isLoggedIn, user]);
 
   // Обновление цвета из HSL
   const updateColorFromHSL = () => {
@@ -74,8 +89,7 @@ const ManualSelectionPage = () => {
     newPalette[activeColorIndex] = color;
     setCustomPalette(newPalette);
 
-      // Преобразуем hex в hsl для слайдеров
-    // Это простая аппроксимация, но для демо подойдет
+    // Преобразуем hex в hsl для слайдеров
     const r = parseInt(color.slice(1,3), 16);
     const g = parseInt(color.slice(3,5), 16);
     const b = parseInt(color.slice(5,7), 16);
@@ -128,13 +142,38 @@ const ManualSelectionPage = () => {
     if (!paletteName) return;
     
     const newPalette = {
+      id: Date.now(),
       name: paletteName,
       colors: [...customPalette],
       date: new Date().toLocaleDateString()
     };
     
-    setSavedPalettes([newPalette, ...savedPalettes]);
+    const updatedPalettes = [newPalette, ...savedPalettes];
+    setSavedPalettes(updatedPalettes);
+    
+    // Сохраняем в localStorage с привязкой к пользователю
+    if (user) {
+      localStorage.setItem(`palettes_${user.id}`, JSON.stringify(updatedPalettes));
+    }
+    
     setPaletteName('');
+  };
+
+  const handleUsePalette = (palette) => {
+    setCustomPalette(palette.colors);
+    setSelectedColor(palette.colors[0]);
+    setActiveColorIndex(0);
+  };
+
+  const handleDeletePalette = (paletteId, e) => {
+    e.stopPropagation(); 
+    
+    const updatedPalettes = savedPalettes.filter(p => p.id !== paletteId);
+    setSavedPalettes(updatedPalettes);
+    
+    if (user) {
+      localStorage.setItem(`palettes_${user.id}`, JSON.stringify(updatedPalettes));
+    }
   };
 
   return (
@@ -310,50 +349,66 @@ const ManualSelectionPage = () => {
                 </div>
               ))}
             </div>
-
-           
-
-            {savedPalettes.length > 0 && isLoggedIn && (
-              <>
-                <h3 style={{ marginTop: 30, marginBottom: 15 }}>Мои палитры</h3>
-                <div className="saved-palettes">
-                  {savedPalettes.map((palette, index) => (
-                    <div key={index} className="saved-item">
-                      <div className="saved-header">
-                        <strong>{palette.name}</strong>
-                        <span className="saved-date">{palette.date}</span>
-                      </div>
-                      <div className="saved-colors">
-                        {palette.colors.map((color, i) => (
-                          <div
-                            key={i}
-                            className="saved-swatch"
-                            style={{ backgroundColor: color }}
-                            onClick={() => handleColorSelect(color)}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>
+
       
+      {isLoggedIn && savedPalettes.length > 0 && (
+        <>
+          <div className="my-palettes-section">
+            <div className="my-palettes-card">
+              <h3 style={{ marginTop: 30, marginBottom: 15 }}>Мои палитры</h3>
+              <div className="saved-palettes">
+                {savedPalettes.map((palette) => (
+                  <div key={palette.id} className="saved-item">
+                    <div className="saved-header">
+                      <strong>{palette.name}</strong>
+                      <span className="saved-date">{palette.date}</span>
+                    </div>
+                    <div className="saved-colors">
+                      {palette.colors.map((color, i) => (
+                        <div
+                          key={i}
+                          className="saved-swatch"
+                          style={{ backgroundColor: color }}
+                          onClick={() => handleColorSelect(color)}
+                        />
+                      ))}
+                    </div>
+                    <div className="palette-actions">
+                      <button 
+                        className="use-saved-btn"
+                        onClick={() => handleUsePalette(palette)}
+                      >
+                        Использовать
+                      </button>
+                      <button 
+                        className="delete-palette-btn"
+                        onClick={(e) => handleDeletePalette(palette.id, e)}
+                      >
+                        Удалить
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+        
       {showLoginModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <button className="modal-close" onClick={() => setShowLoginModal(false)}>✕</button>
             <p>Пожалуйста, войдите в систему, чтобы сохранять палитры</p>
-            <button className="modal-login-btn" onClick={() => window.location.href = '/login'}>
+            <button className="modal-login-btn" onClick={() => navigate('/login')}>
               Войти
             </button>
           </div>
         </div>
       )}
-
     </div>
   );
 };

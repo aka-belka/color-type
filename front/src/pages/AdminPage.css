@@ -1,0 +1,444 @@
+.admin-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.admin-page h1 {
+  color: #cfae44;
+  font-size: 45px;
+}
+
+.admin-stats {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+.users-table {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+  margin-bottom: 30px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px 150px 150px 1fr;
+  background: #0b400a;
+  color: white;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px 150px 150px 1fr;
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  align-items: center;
+}
+
+.table-row:hover {
+  background: #f8f9fa;
+}
+
+.role-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.role-badge.admin {
+  background: #66ea9620;
+  color: #0b400a;
+}
+
+.role-badge.user {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn.toggle-role {
+  background: #89ea6620;
+  color: #0b400a;
+}
+
+.action-btn.toggle-role:hover {
+  background: #0b400a;
+  color: white;
+}
+
+.action-btn.delete {
+  background: #ff475720;
+  color: #ff4757;
+}
+
+.action-btn.delete:hover {
+  background: #ff4757;
+  color: white;
+}
+
+.back-btn {
+  padding: 12px 30px;
+  background: #0b400a;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Вкладки */
+.admin-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+  justify-content: center;
+}
+
+.admin-tabs button {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.admin-tabs button:hover {
+  color: #cfae44;
+}
+
+.admin-tabs button.active {
+  color: #cfae44;
+}
+
+/* Статус пользователя */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background: #2ED57320;
+  color: #2ED573;
+}
+
+.status-badge.banned {
+  background: #FF475720;
+  color: #FF4757;
+}
+
+.action-btn.ban {
+  background: #FFA50220;
+  color: #FFA502;
+}
+
+.action-btn.ban:hover {
+  background: #FFA502;
+  color: white;
+}
+
+.action-btn.unban {
+  background: #FFA50220;
+  color: #FFA502;
+}
+
+.action-btn.unban:hover {
+  background: #FFA502;
+  color: white;
+}
+
+/* Статистика */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.stat-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0b400a;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 14px;
+}
+
+/* График популярности */
+.popularity-chart {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.chart-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.chart-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+}
+
+.season-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.chart-bar-container {
+  flex: 1;
+  height: 30px;
+  background: #f0f0f0;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.chart-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Статьи */
+.articles-list {
+  margin-top: 20add-articlepx;
+}
+
+.article-item {
+  background: white;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.article-category {
+  font-size: 12px;
+  color: #667eea;
+  margin-left: 10px;
+}
+
+.article-date {
+  font-size: 12px;
+  color: #999;
+  margin-left: 10px;
+}
+
+.article-actions button {
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 5px;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    padding: 12px 30px;
+}
+.btn-edit{
+    background: #166915; 
+}
+
+.btn-del{
+    background: #b81f1f;
+}
+
+
+.btn-edit:hover {
+  transform: translateY(-2px);
+}
+.btn-del:hover {
+  transform: translateY(-2px);
+}
+
+
+.article-preview {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.add-article-btn {
+  background: #cfae44;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transform: transform 0.2s;
+  transition: all 0.3s;
+}
+.add-article-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Модальное окно для статей */
+.article-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.article-modal textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Логи */
+.logs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.clear-logs-btn {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.clear-logs-btn:hover {
+    transform: translateY(-2px);
+}
+
+.logs-container {
+  background: #1a1a1a;
+  color: #00ff00;
+  font-family: monospace;
+  padding: 20px;
+  border-radius: 12px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  padding: 5px 0;
+  border-bottom: 1px solid #333;
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.log-entry.error {
+  color: #ff6b6b;
+}
+
+.log-entry.warning {
+  color: #ffd93d;
+}
+
+.log-entry.info {
+  color: #6bff6b;
+}
+
+.log-time {
+  color: #888;
+  flex-shrink: 0;
+}
+
+.log-type {
+  color: #aaa;
+  flex-shrink: 0;
+  width: 60px;
+}
+
+.log-message {
+  flex: 1;
+  word-break: break-all;
+}
+
+.no-logs {
+  color: #666;
+  text-align: center;
+  padding: 20px;
+}
