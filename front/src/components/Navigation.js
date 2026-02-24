@@ -2,17 +2,18 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navigation.css';
+import {  useTheme } from '../App.js';
 
 const Navigation = () => {
   const location = useLocation();
   const { isLoggedIn, isAdmin } = useAuth();
+  const { themeMode, toggleTheme } = useTheme();
 
   const navItems = [
     { name: 'Главная', path: '/' },
     { name: 'Ручной подбор', path: '/manual' },
     { name: 'Анализ ИИ', path: '/ai' },
     { name: 'Теория цвета', path: '/theory' },
-    { name: 'Настройки', path: '/settings' },
   ];
 
   if (isAdmin) {
@@ -24,7 +25,7 @@ const Navigation = () => {
   });
 
   return (
-    <nav className="main-navigation" aria-label="Основная навигация">
+    <nav className={`main-navigation ${themeMode}-theme`} aria-label="Основная навигация">
       <div className="nav-logo">
         <Link to="/" className="logo-link">
           <span className="logo-text">designer</span>
@@ -42,6 +43,16 @@ const Navigation = () => {
             </Link>
           </li>
         ))}
+
+        <li className="theme-toggle-item">
+          <button 
+            onClick={toggleTheme} 
+            className={`theme-toggle-btn ${themeMode === 'dark' ? 'active' : ''}`}
+            aria-label="Переключить тему"
+          >
+          </button>
+        </li>
+
       </ul>
     </nav>
   );

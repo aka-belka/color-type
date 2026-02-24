@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './AIPage.css';
+import { compress, decompress, useTheme  } from '../App.js';
+import imageCompression from 'browser-image-compression';
+import BackgroundImage2 from '../assets/background2.png';
+import BackgroundImage3 from '../assets/background3.png';
+import BackgroundImage4 from '../assets/background4.png';
 
 const AIPage = () => {
     const [userPhoto, setUserPhoto] = useState(null);
@@ -10,6 +15,7 @@ const AIPage = () => {
     const [result, setResult] = useState(null);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [saveSuccess, setSaveSuccess] = useState(false);
+    const { themeMode } = useTheme();
 
     const { isLoggedIn, user } = useAuth();
     const navigate = useNavigate();
@@ -36,12 +42,10 @@ const AIPage = () => {
 
         setIsLoading(true);
 
-        // Создаем FormData для отправки файла
         const formData = new FormData();
         formData.append('photo', photoFile);
 
         try {
-            // Отправляем на бэкенд (замените URL на ваш)
             const response = await fetch('http://localhost:5000/api/analyze', {
                 method: 'POST',
                 body: formData,
@@ -73,123 +77,145 @@ const AIPage = () => {
         }
     };
 
-    const handleSaveResult = () => {
+    const handleSaveResult = async () => {
         if (!isLoggedIn || !result) return;
 
-        // Получаем существующие результаты из localStorage
-        const savedResults = JSON.parse(localStorage.getItem(`results_${user.id}`)) || [];
-        
-        // Добавляем новый результат
+        const compressed = localStorage.getItem(`results_${user.id}`);
+        const savedResults = compressed ? decompress(compressed) : [];
+        let compressedPhoto = userPhoto;
+        if (photoFile) {
+            const options = {
+            maxSizeMB: 0.5, 
+            maxWidthOrHeight: 500, 
+            useWebWorker: true
+            };
+            
+            try {
+                const compressedFile = await imageCompression(photoFile, options);
+                compressedPhoto = await imageCompression.getDataUrlFromFile(compressedFile);
+                console.log('Фото сжато, размер:', compressedPhoto.length);
+            } catch (error) {
+                console.error('Ошибка сжатия фото:', error);
+                compressedPhoto = userPhoto; 
+            }
+        }
         const newResult = {
             id: Date.now(),
             date: new Date().toLocaleDateString(),
+            photo:  compressedPhoto,
             result: result
         };
         
         const updatedResults = [newResult, ...savedResults];
-        localStorage.setItem(`results_${user.id}`, JSON.stringify(updatedResults));
+        
+        const compressedData = compress(updatedResults);
+        localStorage.setItem(`results_${user.id}`, compressedData);
         
         setSaveSuccess(true);
         setTimeout(() => setSaveSuccess(false), 2000);
     };
 
     return (
-        <div className="AI-page">
+        <div className={`AI-page ${themeMode}-theme`}>
+            {themeMode === 'light' &&  <img src={BackgroundImage4} className="background-foto41"/>}
             <section className="AI-hero-section">
-                <h1 className="AI-hero-title">Определим ваш цветотип по фото бесплатно</h1>
+                <h1 className="AI-hero-title">ОПРЕДЕЛИМ ЦВЕТОТИП ПО ФОТО </h1>
                 <p className="AI-hero-subtitle">Пройдите сезонный тест онлайн за секунды, бесплатно и без регистрации. Загрузите фото лица и головы и узнайте свой цветотип. Это поможет вам выбрать идеальные цветовые решения и подчеркнуть свою природную красоту.</p>
             </section>
-
-            <section className="foto-section">
-                <p className="foto-title">Загрузите фото лица и головы: </p>
-                <p className="foto-hint">Пожалуйста, убедитесь, что освещение хорошее, лицо хорошо видно, без фильтров и сильного макияжа</p>
-            
-                {userPhoto ? (
-                    <div className="foto-preview">
-                    <img src={userPhoto} alt="User" className="preview-img" />
-                    </div>
-                ) : (
-                    <div className="foto" onClick={() => document.getElementById('photo-upload-ai').click()}>
-                    <p>Нажмите, чтобы выбрать PNG, JPG, WEBP</p>
-                    </div>
-                )}
+            {themeMode === 'light' && !result  && (<img src={BackgroundImage3} style={{top : 500}} className="background-foto31"/>)}
+            {themeMode === 'light' && result && isLoggedIn && (<img src={BackgroundImage3} className="background-foto31"/>)}
+            <section className="foto-result-section">
+                <section className="foto-section">
+                    <p className="foto-title">ЗАГРУЗИТЕ ФОТО ЛИЦА И ГОЛОВЫ: </p>
+                    <p className="foto-hint">Пожалуйста, убедитесь, что освещение хорошее, лицо хорошо видно, без фильтров и сильного макияжа</p>
                 
-                <input
-                    id="photo-upload-ai"
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePhotoUpload}
-                    style={{ display: 'none' }}
-                />
-                
-                <div className="button-container">
-                    <button 
-                        className="change-photo-btn-ai"
-                        disabled={!userPhoto || isLoading}
-                        onClick={() => document.getElementById('photo-upload-ai').click()}
-                    >
-                        Изменить фото
-                    </button>
-                    
-                    <button 
-                        className="AI-btn" 
-                        disabled={!userPhoto || isLoading}
-                        onClick={handleAnalyze}
-                    >
-                        {isLoading ? 'Анализ...' : 'Узнайте цветотип бесплатно!'}
-                    </button>
-                </div>
-            
-            </section>
-
-            {result && (
-                <div className="result-container">
-                    <div className="result-title">
-                        <h2>Результат анализа</h2>
-                    </div>
-                    <div className="result-info">
-                        <div className="result-description">
-                            <p>Ваш цветотип: {result.season}</p>
-                            <p>Точность: {result.confidence}%</p>
+                    {userPhoto ? (
+                        <div className="foto-preview">
+                        <img src={userPhoto} alt="User" className="preview-img" />
                         </div>
-                        {result.colors && (
-                            <div className="result-palette">
-                                <h3>Ваша цветовая палитра: </h3>
-                                <div className="palette-colors">
-                                {result.colors.map((color, index) => (
-                                    <div 
-                                        key={index}
-                                        className="palette-color-block"
-                                        style={{ backgroundColor: color }}
-                                        title={color}
-                                    />
-                                ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    {result.recommendations && (
-                        <div className="result-recommendations">
-                            <h3>Рекомендации:</h3>
-                            <ul>
-                            {result.recommendations.map((rec, index) => (
-                                <li key={index}>{rec}</li>
-                            ))}
-                            </ul>
+                    ) : (
+                        <div className="foto" onClick={() => document.getElementById('photo-upload-ai').click()}>
+                            <p>Нажмите, чтобы выбрать PNG, JPG, WEBP</p>
                         </div>
                     )}
-
-                    <div className="result-buttons">
+                    
+                    <input
+                        id="photo-upload-ai"
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        style={{ display: 'none' }}
+                    />
+                    
+                    <div className="button-container">
                         <button 
-                            className="save-result-btn"
-                            onClick={handleSaveResult}
+                            className="change-photo-btn-ai"
+                            disabled={!userPhoto || isLoading}
+                            onClick={() => document.getElementById('photo-upload-ai').click()}
                         >
-                            {saveSuccess ? '✓ Сохранено' : 'Сохранить результат'}
+                            Изменить фото
+                        </button>
+                        
+                        <button 
+                            className="AI-btn" 
+                            disabled={!userPhoto || isLoading}
+                            onClick={handleAnalyze}
+                        >
+                            {isLoading ? 'Анализ...' : 'Узнайте цветотип бесплатно!'}
                         </button>
                     </div>
-                </div>
-            )}
+                
+                </section>
+                {result && isLoggedIn && (
+                        <div className="result-container">
+                            <div className="result-title">
+                                <h2>РЕЗУЛЬТАТ АНАЛИЗА</h2>
+                            </div>
+                            <div className="result-info">
+                                <div className="result-description">
+                                    <p><strong>Ваш цветотип:</strong> {result.season}</p>
+                                    <p><strong>Точность:</strong> {result.confidence}%</p>
+                                </div>
+                                {result.colors && (
+                                    <div className="result-palette">
+                                        <h3>Ваша цветовая палитра: </h3>
+                                        <div className="palette-colors">
+                                        {result.colors.map((color, index) => (
+                                            <div 
+                                                key={index}
+                                                className="palette-color-block1"
+                                                style={{ backgroundColor: color }}
+                                                title={color}
+                                            />
+                                        ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            
+                            {result.recommendations && (
+                                <div className="result-recommendations">
+                                    <h3>Рекомендации:</h3>
+                                    <ul>
+                                    {result.recommendations.map((rec, index) => (
+                                        <li key={index}>{rec}</li>
+                                    ))}
+                                    </ul>
+                                </div>
+                            )}
 
+                            <div className="result-buttons">
+                                <button 
+                                    className="save-result-btn"
+                                    onClick={handleSaveResult}
+                                >
+                                    {saveSuccess ? '✓ Сохранено' : 'Сохранить результат'}
+                                </button>
+                            </div>
+                            
+                        </div>
+                )}
+            </section>
             {showLoginModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">

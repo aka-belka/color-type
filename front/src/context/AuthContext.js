@@ -42,7 +42,6 @@ export const AuthProvider = ({ children }) => {
     setUsers(updatedUsers);
     localStorage.setItem('users', JSON.stringify(updatedUsers));
     
-    // Устанавливаем состояние входа
     setIsLoggedIn(true);
     setUser(newUser);
     setIsAdmin(newUser.role === 'admin');

@@ -1,5 +1,5 @@
 .main-navigation {
-  background-color: #fff;
+  background-color: var(--primary);
   border-bottom: 2px solid #cfae44;
   padding: 0 20px;
   display: flex;
@@ -22,13 +22,10 @@
   font-size: 24px;
 }
 
-.logo-icon {
-  font-size: 28px;
-  margin-right: 10px;
-}
 
 .logo-text {
   font-weight: 700;
+  color: var(--text-color);
 }
 
 .nav-menu {
@@ -45,7 +42,7 @@
 
 .nav-menu a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-color-pr1);
   font-weight: 500;
   font-size: 16px;
   padding: 8px 0;
@@ -60,4 +57,35 @@
 .nav-menu a.active {
   color: #cfae44;
   font-weight: 600;
+}
+
+.theme-toggle-btn {
+  width: 45px;
+  height: 23px;
+  background: #ccc;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.theme-toggle-btn::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 2px;
+  width: 17px;
+  height: 17px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.theme-toggle-btn.active {
+  background: #cfae44;
+}
+
+.theme-toggle-btn.active::after {
+  transform: translateX(24px);
 }

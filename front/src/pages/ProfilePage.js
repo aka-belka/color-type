@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './ProfilePage.css';
+import { compress, decompress, useTheme } from '../App.js';
+import BackgroundImage43 from '../assets/background4.png';
+import BackgroundImage13 from '../assets/background1.png';
 
 const ProfilePage = () => {
     const { user, logout, isAdmin } = useAuth();
@@ -9,13 +12,18 @@ const ProfilePage = () => {
     const [savedPalettes, setSavedPalettes] = useState([]);
     const navigate = useNavigate();
     const [selectedResult, setSelectedResult] = useState(null);
+    const { themeMode } = useTheme();
 
     useEffect(() => {
         if (user) {
-            const results = JSON.parse(localStorage.getItem(`results_${user.id}`)) || [];
+            
+            const resultsCompressed = localStorage.getItem(`results_${user.id}`);
+            const results = resultsCompressed ? decompress(resultsCompressed) : [];
+            console.log('Загруженные результаты:', results);
             setSavedResults(results);
             
-            const palettes = JSON.parse(localStorage.getItem(`palettes_${user.id}`)) || [];
+            const palettesCompressed = localStorage.getItem(`palettes_${user.id}`);
+            const palettes = palettesCompressed ? decompress(palettesCompressed) : [];
             setSavedPalettes(palettes);
     }
     }, [user]);
@@ -26,6 +34,18 @@ const ProfilePage = () => {
 
     const closeModal = () => {
         setSelectedResult(null);
+    };
+
+    const handleDeleteResult = (resultId, e) => {
+        e.stopPropagation(); 
+        
+        const updatedResults = savedResults.filter(r => r.id !== resultId);
+        setSavedResults(updatedResults);
+        
+        if (user) {
+        const compressed = compress(updatedResults);
+        localStorage.setItem(`results_${user.id}`, compressed);
+        }
     };
 
     const handleLogout = () => {
@@ -39,7 +59,9 @@ const ProfilePage = () => {
     }
 
     return (
-        <div className="profile-page">
+        <div className={`profile-page ${themeMode}-theme`}>
+            <img src={BackgroundImage13} className="background-foto13"/>
+            {themeMode === 'light' && <img src={BackgroundImage43} className="background-foto43" />}
             <div className="profile-container">
                 <h2>Профиль</h2>
                 <div className="profile-info">
@@ -54,26 +76,38 @@ const ProfilePage = () => {
                 <div className="saved-results-section">
                     <h3>Мои результаты анализов</h3>
                     <div className="saved-results-grid">
-                    {savedResults.map((item) => (
-                        <div key={item.id} className="saved-result-card" onClick={() => openResultModal(item)}>
-                        <div className="result-header">
-                            <strong>{item.result.season}</strong>
-                            <span className="result-date">{item.date}</span>
-                        </div>
-                        {item.photo && (
-                            <img src={item.photo} alt="Анализ" className="result-thumbnail" />
-                        )}
-                        <div className="result-mini-palette">
-                            {item.result.colors?.map((color, i) => (
-                            <div 
-                                key={i}
-                                className="mini-swatch"
-                                style={{ backgroundColor: color }}
-                            />
-                            ))}
-                        </div>
-                        </div>
-                    ))}
+                        {savedResults.map((item) => (
+                            <div key={item.id} className="saved-result-card">
+                                <div 
+                                    className="result-card-content" 
+                                    onClick={() => openResultModal(item)}
+                                >
+                                    <div className="result-header">
+                                        <strong>{item.result.season}</strong>
+                                        <span className="result-date">{item.date}</span>
+                                    </div>
+
+                                    {item.photo && (
+                                        <img src={item.photo} alt="Анализ" className="result-thumbnail" />
+                                    )}
+                                    <div className="result-mini-palette">
+                                        {item.result.colors?.map((color, i) => (
+                                            <div 
+                                                key={i}
+                                                className="mini-swatch"
+                                                style={{ backgroundColor: color }}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                                <button 
+                                    className="delete-result-btn1"
+                                    onClick={(e) => handleDeleteResult(item.id, e)}
+                                >
+                                    Удалить
+                                </button>
+                            </div>
+                        ))}
                     </div>
                 </div>
                 )}
@@ -124,28 +158,29 @@ const ProfilePage = () => {
                     <div className="modal-content result-modal" onClick={(e) => e.stopPropagation()}>
                         <button className="modal-close" onClick={closeModal}>✕</button>
                         <h2>Результат анализа</h2>
-                        <p><strong>Дата:</strong> {selectedResult.date}</p>
-                        <p><strong>Цветотип:</strong> {selectedResult.result.season}</p>
-                        <p><strong>Точность:</strong> {selectedResult.result.confidence}%</p>
-                        
                         {selectedResult.photo && (
                             <img src={selectedResult.photo} alt="Анализ" className="modal-photo" />
                         )}
-                    
-                        <div className="modal-palette">
-                            <h3>Палитра:</h3>
-                            <div className="modal-colors">
-                                {selectedResult.result.colors?.map((color, i) => (
-                                    <div 
-                                    key={i}
-                                    className="modal-color"
-                                    style={{ backgroundColor: color }}
-                                    title={color}
-                                    />
-                                ))}
+                        <div className="mod-res">
+                            <div>
+                                <p><strong>Дата:</strong> {selectedResult.date}</p>
+                                <p><strong>Цветотип:</strong> {selectedResult.result.season}</p>
+                                <p><strong>Точность:</strong> {selectedResult.result.confidence}%</p>
+                            </div>
+                            <div className="modal-palette">
+                                <h3>Палитра:</h3>
+                                <div className="modal-colors">
+                                    {selectedResult.result.colors?.map((color, i) => (
+                                        <div 
+                                        key={i}
+                                        className="modal-color"
+                                        style={{ backgroundColor: color }}
+                                        title={color}
+                                        />
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    
                         {selectedResult.result.recommendations && (
                             <div className="modal-recommendations">
                                 <h3>Рекомендации:</h3>

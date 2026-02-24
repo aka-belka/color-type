@@ -3,10 +3,14 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './ManualSelectionPage.css';
 import FotoImage from '../assets/foto.png';
+import { compress, decompress,useTheme } from '../App.js';
+import BackgroundImage3 from '../assets/background3.png';
+import BackgroundImage4 from '../assets/background4.png';
 
 const ManualSelectionPage = () => {
-  const { isLoggedIn, user } = useAuth(); // Берем isLoggedIn из AuthContext
+  const { isLoggedIn, user } = useAuth(); 
   const navigate = useNavigate();
+  const { themeMode } = useTheme();
   
   const [selectedColor, setSelectedColor] = useState('#cfae44');
   const [activeColorIndex, setActiveColorIndex] = useState(0);
@@ -19,28 +23,29 @@ const ManualSelectionPage = () => {
   const [userPhoto, setUserPhoto] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // Загружаем сохраненные палитры пользователя при входе
   useEffect(() => {
     if (isLoggedIn && user) {
-      const userPalettes = JSON.parse(localStorage.getItem(`palettes_${user.id}`)) || [];
-      setSavedPalettes(userPalettes);
-    } else {
-      setSavedPalettes([]);
-    }
+      const compressed  = localStorage.getItem(`palettes_${user.id}`);
+      if (compressed) {
+        const userPalettes = decompress(compressed) || [];
+        setSavedPalettes(userPalettes);
+      } else {
+        setSavedPalettes([]);
+      }
+  } else {
+    setSavedPalettes([]);
+  }
   }, [isLoggedIn, user]);
 
-  // Обновление цвета из HSL
   const updateColorFromHSL = () => {
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     setSelectedColor(color);
     
-    // Обновляем цвет в палитре
     const newPalette = [...customPalette];
     newPalette[activeColorIndex] = color;
     setCustomPalette(newPalette);
   };
 
-  // Обработчики слайдеров
   const handleHueChange = (e) => {
     setHue(e.target.value);
     updateColorFromHSL();
@@ -75,21 +80,13 @@ const ManualSelectionPage = () => {
     }
   ];
 
-  const presetColors = [
-    '#FF4757', '#FFA502', '#FFC312', '#2ED573', '#1E90FF', '#AA80F9',
-    '#FF6B6B', '#FF8E53', '#FFB347', '#6B8E23', '#3742FA', '#8B4513',
-    '#FF69B4', '#E6E6FA', '#B0E0E6', '#D8BFD8', '#AFEEEE', '#C7CEEA'
-  ];
-
   const handleColorSelect = (color) => {
     setSelectedColor(color);
     
-    // Обновляем цвет в палитре
     const newPalette = [...customPalette];
     newPalette[activeColorIndex] = color;
     setCustomPalette(newPalette);
 
-    // Преобразуем hex в hsl для слайдеров
     const r = parseInt(color.slice(1,3), 16);
     const g = parseInt(color.slice(3,5), 16);
     const b = parseInt(color.slice(5,7), 16);
@@ -151,9 +148,9 @@ const ManualSelectionPage = () => {
     const updatedPalettes = [newPalette, ...savedPalettes];
     setSavedPalettes(updatedPalettes);
     
-    // Сохраняем в localStorage с привязкой к пользователю
     if (user) {
-      localStorage.setItem(`palettes_${user.id}`, JSON.stringify(updatedPalettes));
+      const compressed = compress(updatedPalettes);
+      localStorage.setItem(`palettes_${user.id}`, compressed);
     }
     
     setPaletteName('');
@@ -172,22 +169,23 @@ const ManualSelectionPage = () => {
     setSavedPalettes(updatedPalettes);
     
     if (user) {
-      localStorage.setItem(`palettes_${user.id}`, JSON.stringify(updatedPalettes));
+      const compressed = compress(updatedPalettes);
+      localStorage.setItem(`palettes_${user.id}`, compressed);
     }
   };
 
   return (
-    <div className="manual-page">
+    <div className={`manual-page ${themeMode}-theme`}>
+      {themeMode === 'light' &&  <img src={BackgroundImage4} className="background-foto4"/>}
       <div className="manual-header">
-        <h1>Ручной подбор цветов</h1>
+        <h1>РУЧНОЙ ПОДБОР ЦВЕТОВ</h1>
         <p>Примеряйте цвета на своё фото и настраивайте оттенки</p>
       </div>
+      {themeMode === 'light' &&  <img src={BackgroundImage3} className="background-foto3"/>}
 
       <div className="manual-content">
-        {/* Левая колонка - круг с фото и настройками */}
         <div className="circle-column">
           <div className="circle-container">
-            {/* Круг с фото */}
             <div className="circle-wrapper">
               <div 
                 className="color-circle1"
@@ -235,7 +233,6 @@ const ManualSelectionPage = () => {
               </button>
             )}
 
-            {/* Панель настроек под кругом */}
             <div className="color-controls">
               <div className="current-color">
                 <div className="color-dot" style={{ backgroundColor: selectedColor }}></div>
@@ -292,9 +289,8 @@ const ManualSelectionPage = () => {
                 </div>
               </div>
 
-              {/* Текущая палитра с возможностью выбора цвета для редактирования */}
               <div className="current-palette">
-                <h3>Текущая палитра</h3>
+                <h3>ТЕКУЩАЯ ПАЛИТРА</h3>
                 <p className="palette-hint">Нажмите на цвет, чтобы редактировать</p>
                 <div className="palette-preview">
                   {customPalette.map((color, index) => (
@@ -326,10 +322,9 @@ const ManualSelectionPage = () => {
           </div>
         </div>
 
-        {/* Правая колонка - готовые палитры */}
         <div className="palettes-column">
           <div className="palettes-card">
-            <h2>Готовые палитры</h2>
+            <h2>ГОТОВЫЕ ПАЛИТРЫ</h2>
             
             <div className="palettes-list">
               {colorPalettes.map((palette, index) => (
@@ -358,7 +353,9 @@ const ManualSelectionPage = () => {
         <>
           <div className="my-palettes-section">
             <div className="my-palettes-card">
-              <h3 style={{ marginTop: 30, marginBottom: 15 }}>Мои палитры</h3>
+              <div  className="my-palettes-card-title">
+                <h3 >МОИ ПАЛИТРЫ</h3>
+              </div>
               <div className="saved-palettes">
                 {savedPalettes.map((palette) => (
                   <div key={palette.id} className="saved-item">

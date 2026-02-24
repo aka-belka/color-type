@@ -4,7 +4,6 @@
   padding: 20px;
 }
 
-/* Шапка */
 .manual-header {
   color: black;
   padding: 50px 30px;
@@ -17,14 +16,17 @@
   font-size: 42px;
   margin-bottom: 15px;
   color:#cfae44;
+  
 }
 
 .manual-header p {
   font-size: 20px;
   opacity: 0.95;
+  font-style: italic;
+  color: var(--text-color-pr1);
+  
 }
 
-/* Основной контент - две колонки */
 .manual-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -32,7 +34,6 @@
   margin-bottom: 40px;
 }
 
-/* ===== Левая колонка ===== */
 .circle-column {
   display: flex;
   justify-content: center;
@@ -42,39 +43,7 @@
   width: 100%;
   max-width: 500px;
 }
-/* Готовые цвета */
-.preset-colors {
-  margin-bottom: 30px;
-}
 
-.preset-colors h3 {
-  font-size: 18px;
-  margin-bottom: 15px;
-  color: #555;
-}
-
-.color-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
-}
-
-.color-btn {
-  aspect-ratio: 1;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  border: 2px solid transparent;
-}
-
-.color-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  border-color: white;
-}
-
-/* Текущая палитра */
 .current-palette {
   margin-bottom: 25px;
 }
@@ -82,25 +51,26 @@
 .current-palette h3 {
   font-size: 18px;
   margin-bottom: 15px;
-  color: #555;
 }
-
+.current-palette p{
+  font-style: italic;
+  color: var(--text-color-pr1);
+}
 .palette-preview {
   display: flex;
   gap: 10px;
   height: 60px;
 }
-
+.active-indicator{
+  color: #0b400a;
+}
 .palette-color {
   flex: 1;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #0b400a;
 }
 
-.palette-color.main {
-  flex: 1.5;
-}
-/* Сохранение */
 .save-palette {
   display: flex;
   gap: 10px;
@@ -109,17 +79,16 @@
 .save-palette input {
   flex: 1;
   padding: 12px 15px;
-  border: 2px solid #e0e0e0;
   border-radius: 10px;
-  font-size: 14px;
+  font-family: 'appetite';
+  background: var(--bg-color1);
 }
 
-.save-palette input:focus {
-  outline: none;
-  border-color: #cfae44;
+.but{
+  background: var(--bg-color1);
+  color: red;
 }
 
-/* Круг с фото */
 .circle-wrapper {
   display: flex;
   justify-content: center;
@@ -152,7 +121,6 @@
   object-fit: cover;
 }
 
-/* Загрузка фото */
 .upload-placeholder {
   width: 280px;
   height: 280px;
@@ -187,8 +155,8 @@
 
 .change-photo-btn {
   background: none;
-  border: 2px solid #0b400a;
-  color: #0b400a;
+  border: 2px solid var(--text-color-pr2);
+  color: var(--text-color-pr2);
   padding: 8px 20px;
   border-radius: 30px;
   cursor: pointer;
@@ -196,14 +164,13 @@
   margin: 0 auto 20px;
   display: block;
   transition: all 0.3s;
+  transition: transform 0.2s;
 }
 
 .change-photo-btn:hover {
-  background: #0b400a;
-  color: white;
+  transform: translateY(-2px);
 }
 
-/* Панель управления */
 .color-controls {
   width: 100%;
 }
@@ -214,31 +181,31 @@
   gap: 10px;
   margin-bottom: 20px;
   padding: 10px 15px;
-  background: #f8f9fa;
   border-radius: 30px;
+  background: var(--bg-color1);
+  border: 1px solid #0b400a;
 }
 
 .color-dot {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 2px solid white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .color-code {
-  font-family: monospace;
   font-size: 16px;
-  color: #333;
   font-weight: 600;
+  color: var(--text-color);
+  
 }
 
-/* Слайдеры */
 .sliders-panel {
-  background: #f8f9fa;
   padding: 20px;
   border-radius: 16px;
   margin-bottom: 20px;
+  background: var(--bg-color1);
+  border: 1px solid #0b400a;
 }
 
 .slider-group {
@@ -257,7 +224,7 @@
 
 .slider-header label {
   font-size: 14px;
-  color: #555;
+  color: var(--text-color);
   font-weight: 600;
 }
 
@@ -287,7 +254,6 @@
   margin-top: -6px;
 }
 
-/* Специальные градиенты для слайдеров */
 .hue-slider {
   background: linear-gradient(to right, 
     #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
@@ -301,62 +267,19 @@
   background: linear-gradient(to right, #000000, #808080, #ffffff);
 }
 
-/* Быстрый выбор */
-.preset-colors {
-  margin-top: 20px;
-}
-
-.preset-colors h4 {
-  font-size: 16px;
-  margin-bottom: 12px;
-  color: #555;
-}
-
-.color-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-}
-
-.color-btn {
-  aspect-ratio: 1;
-  width: 100%;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 2px solid transparent;
-}
-
-.color-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.color-btn.active {
-  border-color: #667eea;
-  transform: scale(1.1);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
-}
-
-/* ===== Правая колонка ===== */
 .palettes-card {
-  background: white;
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-  border: 1px solid #f0f0f0;
 }
 
 .palettes-card h2 {
   font-size: 24px;
   margin-bottom: 25px;
-  color: #333;
+  color: var(--text-color-pr3);
   padding-bottom: 15px;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid var(--text-color-pr);
 }
 
-/* Готовые палитры */
 .palettes-list {
   display: flex;
   flex-direction: column;
@@ -366,14 +289,15 @@
 
 .palette-item {
   padding: 15px;
-  background: #f8f9fa;
+  background: var(--bg-color1);
   border-radius: 12px;
+  border: 2px dashed #0b400a;
 }
 
 .palette-item h3 {
   font-size: 16px;
   margin-bottom: 10px;
-  color: #555;
+  color: var(--text-color);
 }
 
 .palette-colors {
@@ -387,7 +311,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
-  border: 3px solid transparent;
+  border: 1px solid #0b400a;
 }
 
 .palette-swatch:hover {
@@ -401,17 +325,6 @@
   box-shadow: 0 3px 10px rgba(0,0,0,0.2);
 }
 
-/* Сохранение */
-.save-section {
-  margin-top: 20px;
-}
-
-.save-section h3 {
-  font-size: 18px;
-  margin-bottom: 15px;
-  color: #555;
-}
-
 .save-palette {
   display: flex;
   gap: 10px;
@@ -420,14 +333,14 @@
 .save-palette input {
   flex: 1;
   padding: 12px 15px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--border-color1);
   border-radius: 10px;
   font-size: 14px;
 }
 
 .save-palette input:focus {
   outline: none;
-  border-color: #0b400a;
+  border: 2px solid #0b400a;
 }
 .palette-actions {
   display: flex;
@@ -446,18 +359,35 @@
 }
 .save-palette button, .use-saved-btn, .delete-palette-btn  {
   padding: 12px 25px;
-  background: #0b400a;
-  color: white;
-  border: none;
+  background: white;
+  color: #0b400a;
+  border: 1px solid #0b400a;
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s;
+  font-family: 'appetite';
+}
+.palette-actions button{
+  background-color: var(--bg-color2);
+}
+.save-palette button{
+  background: var(--bg-color1);
+  color: var(--text-color-pr2);
 }
 
+.save-palette input {
+  color:var(--text-color-pr1);
+}
+::placeholder {
+  color: var(--text-color-pr1);
+  opacity: var(--opacity); 
+}
 .delete-palette-btn {
-  background: #ff4757;
-  color: white;
+  background: white;
+  color: var(--btn-color);
+  border: 1px solid var(--btn-color);
+  font-family: 'appetite';
 }
 .save-palette button:hover:not(:disabled) {
   transform: translateY(-2px);
@@ -468,42 +398,31 @@
   cursor: not-allowed;
 }
 
-/* Сообщение о входе */
-.login-message {
-  text-align: center;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea10, #764ba210);
-  border-radius: 12px;
-  border: 1px dashed #667eea;
-}
-
-.login-message p {
-  color: #667eea;
-  font-weight: 600;
-  margin: 0;
-}
-
-/* Сохраненные палитры */
-
 .my-palettes-section{
   margin-top: 40px;
   width: 100%;
+  border-radius: 20px;
+}
+.my-palettes-card-title{
+  border-bottom: 2px solid #0b400a;
+
 }
 .my-palettes-section h3 {
   text-align: center;
   font-size: 28px;
   color: #cfae44;
-  margin-bottom: 30px;
+  padding-top: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   position: relative;
   padding-bottom: 15px;
 }
 
 .my-palettes-card{
-  background: white;
+  background-color: var(--bg-color1);
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-  border: 1px solid #f0f0f0;
+
 }
 
 .saved-palettes {
@@ -515,8 +434,9 @@
 
 .saved-item {
   padding: 15px;
-  background: #e3e6e3;
+  background: var(--bg-color2);
   border-radius: 12px;
+  border: 2px dashed #0b400a;
 }
 
 .saved-header {
@@ -533,7 +453,7 @@
 
 .saved-date {
   font-size: 12px;
-  color: #999;
+  color: var(--text-color3);
 }
 
 .saved-colors {
@@ -547,6 +467,8 @@
   border-radius: 6px;
   cursor: pointer;
   transition: transform 0.2s;
+  
+  border: 1px solid #0b400a;
 }
 
 .saved-swatch:hover {
@@ -555,7 +477,6 @@
 }
 
 
-/* Модальное окно */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -570,7 +491,6 @@
 }
 
 .modal-content {
-  background: white;
   padding: 30px;
   border-radius: 20px;
   max-width: 400px;
