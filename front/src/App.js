@@ -77,9 +77,6 @@ const getMuiTheme = (mode) => createTheme({
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
 });
-const basename = process.env.NODE_ENV === 'production' 
-    ? '/color-type' 
-    : '/'; 
   
 function AppContent() {
   const { themeMode } = useTheme();
@@ -87,7 +84,7 @@ function AppContent() {
   return (
     <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
-        <Router basename={basename}>
+        <Router>
           <div className="App">
             <Navigation />
             <main className="main-content">

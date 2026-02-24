@@ -15,12 +15,6 @@ const ProfilePage = () => {
     const { themeMode } = useTheme();
 
     useEffect(() => {
-        if (!user) {
-            navigate('/login');
-        }
-    }, [user, navigate]);
-
-    useEffect(() => {
         if (user) {
             
             const resultsCompressed = localStorage.getItem(`results_${user.id}`);
@@ -60,6 +54,7 @@ const ProfilePage = () => {
     };
 
     if (!user) {
+        navigate('/login');
         return null;
     }
 
