@@ -77,7 +77,7 @@ const getMuiTheme = (mode) => createTheme({
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
 });
-const basename = process.env.NODE_ENV === 'production' ? '/color-type' : '/';
+const basename = process.env.NODE_ENV === 'production' ? '' : '/';
 function AppContent() {
   const { themeMode } = useTheme();
   const muiTheme = getMuiTheme(themeMode);
