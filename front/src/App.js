@@ -1,7 +1,7 @@
 import './App.css';
 import LZString from 'lz-string';
 import React, { useState, useEffect, createContext, useContext} from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -77,14 +77,13 @@ const getMuiTheme = (mode) => createTheme({
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
 });
-const basename = process.env.NODE_ENV === 'production' ? '' : '/';
 function AppContent() {
   const { themeMode } = useTheme();
   const muiTheme = getMuiTheme(themeMode);
   return (
     <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
-        <Router basename={basename}>
+        <Router >
           <div className="App">
             <Navigation />
             <main className="main-content">
