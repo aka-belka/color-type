@@ -207,7 +207,7 @@ const ColorTheoryPage = () => {
 
         <div className="seasons-grid-full">
           <div className="season-card-full spring-card">
-            <div className="season-header" >
+            <div className="season-header" style={{background: '#FFDAB9'}}>
               <h3>Весна</h3>
               <div className="season-tag">Теплый • Светлый • Чистый</div>
             </div>
@@ -260,7 +260,7 @@ const ColorTheoryPage = () => {
           </div>
 
           <div className="season-card-full summer-card">
-            <div className="season-header">
+            <div className="season-header" style={{background: '#D8BFD8'}}>
               <h3>Лето</h3>
               <div className="season-tag">Холодный • Мягкий • Приглушенный</div>
             </div>
@@ -304,7 +304,7 @@ const ColorTheoryPage = () => {
           </div>
 
           <div className="season-card-full autumn-card">
-            <div className="season-header">
+            <div className="season-header" style={{background: '#CD853F'}}>
               <h3>Осень</h3>
               <div className="season-tag">Теплый • Насыщенный • Глубокий</div>
             </div>
@@ -348,7 +348,7 @@ const ColorTheoryPage = () => {
           </div>
 
           <div className="season-card-full winter-card">
-            <div className="season-header" >
+            <div className="season-header" style={{background: '#B0C4DE'}}>
               <h3>Зима</h3>
               <div className="season-tag">Холодный • Яркий • Контрастный</div>
             </div>

@@ -291,7 +291,7 @@
   padding: 15px;
   background: var(--bg-color1);
   border-radius: 12px;
-  border: 2px dashed #0b400a;
+  border: 2px solid #0b400a;
 }
 
 .palette-item h3 {

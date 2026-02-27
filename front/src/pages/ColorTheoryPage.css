@@ -333,7 +333,7 @@
 
 .season-header {
   padding: 30px 40px;
-  color: var(--text-color);
+  color: black;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -354,7 +354,7 @@
   font-size: 14px;
   font-weight: 600;
   margin-left: auto;
-  border: 2px dashed var(--border-color2);
+  border: 2px dashed black;
 }
 
 .season-body {
@@ -444,17 +444,18 @@
   border-radius: 16px;
   border: 2px dashed var(--border-color2);
   text-align: center;
+  background: #DCEDC1;
 }
 
 
 .method-content h5 {
   font-size: 18px;
   margin-bottom: 8px;
-  color: var(--text-color);
+  color: black;
 }
 
 .method-content p {
-  color: var(--text-color);
+  color: black;
   line-height: 1.6;
   margin: 0;
   font-size: 15px;

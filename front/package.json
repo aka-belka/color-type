@@ -1,6 +1,5 @@
 {
   "name": "front",
-  "homepage": "https://aka-belka.github.io",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -205,7 +205,7 @@
 .chart-bar-container {
   flex: 1;
   height: 30px;
-  background: #f0f0f0;
+  background: #f0f0f0c5;
   border-radius: 15px;
 }
 

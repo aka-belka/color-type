@@ -59,19 +59,57 @@ const AIPage = () => {
             setResult(data);
         } catch (error) {
             console.error('Ошибка при анализе:', error);
-            const testData = {
-                season: 'Весна',
-                confidence: 87,
-                colors: ['#FFDAB9', '#FFB347', '#FF8C69', '#A8E6CF', '#FFD3B6'],
-                recommendations: [
-                'Теплые пастельные тона',
-                'Золотые аксессуары',
-                'Коралловый и персиковый',
-                'Cлоновая кость'
-                ]
-            };
+            const testResults = [
+                {
+                    season: 'Весна',
+                    confidence: 87,
+                    colors: ['#FFDAB9', '#FFB347', '#FF8C69', '#A8E6CF', '#FFD3B6'],
+                    recommendations: [
+                        'Теплые пастельные тона',
+                        'Золотые аксессуары',
+                        'Коралловый и персиковый',
+                        'Избегайте черного и белоснежного'
+                    ]
+                },
+                {
+                    season: 'Лето',
+                    confidence: 92,
+                    colors: ['#E6E6FA', '#B0E0E6', '#D8BFD8', '#AFEEEE', '#C7CEEA'],
+                    recommendations: [
+                        'Холодные пастельные тона',
+                        'Серебряные аксессуары',
+                        'Лавандовый и мятный',
+                        'Избегайте ярких теплых цветов'
+                    ]
+                },
+                {
+                    season: 'Осень',
+                    confidence: 78,
+                    colors: ['#DEB887', '#CD853F', '#8B4513', '#6B8E23', '#D2691E'],
+                    recommendations: [
+                        'Теплые насыщенные тона',
+                        'Землистые оттенки',
+                        'Оливковый и горчичный',
+                        'Избегайте холодных пастелей'
+                    ]
+                },
+                {
+                    season: 'Зима',
+                    confidence: 95,
+                    colors: ['#FF4757', '#1E90FF', '#FFFFFF', '#2C3A47', '#AA80F9'],
+                    recommendations: [
+                        'Чистые холодные тона',
+                        'Контрастные сочетания',
+                        'Красный и синий',
+                        'Избегайте теплых и приглушенных цветов'
+                    ]
+                }
+            ];
 
-            setResult(testData);
+            const randomIndex = Math.floor(Math.random() * testResults.length);
+            const data = testResults[randomIndex];
+
+            setResult(data);
         } finally {
             setIsLoading(false);
         }

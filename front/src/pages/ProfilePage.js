@@ -100,12 +100,14 @@ const ProfilePage = () => {
                                         ))}
                                     </div>
                                 </div>
-                                <button 
-                                    className="delete-result-btn1"
-                                    onClick={(e) => handleDeleteResult(item.id, e)}
-                                >
-                                    Удалить
-                                </button>
+                                <div className="delete-result-btn1-container"> 
+                                    <button 
+                                        className="delete-result-btn1"
+                                        onClick={(e) => handleDeleteResult(item.id, e)}
+                                    >
+                                        Удалить
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
