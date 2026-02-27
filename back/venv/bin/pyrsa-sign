@@ -1,4 +1,4 @@
-#!/Users/tuhvatullinaazaliaazamatovna/Documents/all_projects/color-type/back/venv/bin/python3
+#!/Users/tuhvatullinaazaliaazamatovna/Documents/all_projects/color-type/back/venv/bin/python3.12
 import sys
 from rsa.cli import sign
 if __name__ == '__main__':
