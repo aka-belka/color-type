@@ -13,8 +13,9 @@ const LoginPage = () => {
   const [phone, setPhone] = useState('');
   const [gender, setGender] = useState('');
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const { login, register, users } = useAuth();
+  const { login, register } = useAuth();
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
@@ -70,29 +71,35 @@ const LoginPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!validateForm()) return;
 
-    if (isLoginMode) {
-      const success = login(email, password);
-      
-      if (success) {
-        navigate('/profile');
+    setLoading(true);
+    
+    try {
+      if (isLoginMode) {
+        const result = await login(email, password);
+        
+        if (result.success) {
+          navigate('/profile');
+        } else {
+          setErrors({ form: result.error });
+        }
       } else {
-        setErrors({ form: 'Неверный email или пароль' });
+        const result = await register(email, password, firstName, lastName, phone, gender);
+        
+        if (result.success) {
+          navigate('/profile');
+        } else {
+          setErrors({ form: result.error });
+        }
       }
-    } else {
-      const existingUser = users.find(u => u.email === email);
-      
-      if (existingUser) {
-        setErrors({ form: 'Пользователь с таким email уже существует' });
-        return;
-      }
-      
-      register(email, password, firstName, lastName, phone, gender);
-      navigate('/profile');
+    } catch (error) {
+      setErrors({ form: 'Произошла ошибка. Попробуйте позже.' });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,6 +121,7 @@ const LoginPage = () => {
                   onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Введите имя"
                   className={errors.firstName ? 'error' : ''}
+                  disabled={loading}
                 />
                 {errors.firstName && <span className="error-text">{errors.firstName}</span>}
               </div>
@@ -126,6 +134,7 @@ const LoginPage = () => {
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="Введите фамилию"
                   className={errors.lastName ? 'error' : ''}
+                  disabled={loading}
                 />
                 {errors.lastName && <span className="error-text">{errors.lastName}</span>}
               </div>
@@ -138,6 +147,7 @@ const LoginPage = () => {
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+7 (999) 123-45-67"
                   className={errors.phone ? 'error' : ''}
+                  disabled={loading}
                 />
                 {errors.phone && <span className="error-text">{errors.phone}</span>}
               </div>
@@ -152,6 +162,7 @@ const LoginPage = () => {
                       value="male"
                       checked={gender === 'male'}
                       onChange={(e) => setGender(e.target.value)}
+                      disabled={loading}
                     />
                     Мужской
                   </label>
@@ -162,6 +173,7 @@ const LoginPage = () => {
                       value="female"
                       checked={gender === 'female'}
                       onChange={(e) => setGender(e.target.value)}
+                      disabled={loading}
                     />
                     Женский
                   </label>
@@ -179,11 +191,12 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               className={errors.email ? 'error' : ''}
+              disabled={loading}
             />
             {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
 
-          <div className="form-group password">
+          <div className="form-group">
             <label>Пароль</label>
             <input
               type="password"
@@ -191,12 +204,13 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••"
               className={errors.password ? 'error' : ''}
+              disabled={loading}
             />
             {errors.password && <span className="error-text">{errors.password}</span>}
           </div>
 
           {!isLoginMode && (
-            <div className="form-group password">
+            <div className="form-group">
               <label>Подтвердите пароль</label>
               <input
                 type="password"
@@ -204,13 +218,14 @@ const LoginPage = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••"
                 className={errors.confirmPassword ? 'error' : ''}
+                disabled={loading}
               />
               {errors.confirmPassword && <span className="error-text">{errors.confirmPassword}</span>}
             </div>
           )}
 
-          <button type="submit" className="submit-btn">
-            {isLoginMode ? 'Войти' : 'Зарегистрироваться'}
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Загрузка...' : (isLoginMode ? 'Войти' : 'Зарегистрироваться')}
           </button>
         </form>
 
@@ -222,14 +237,9 @@ const LoginPage = () => {
               setErrors({});
               setPassword('');
               setConfirmPassword('');
-              if (!isLoginMode) {
-                setFirstName('');
-                setLastName('');
-                setPhone('');
-                setGender('');
-              }
             }}
             className="toggle-btn"
+            disabled={loading}
           >
             {isLoginMode ? 'Зарегистрироваться' : 'Войти'}
           </button>

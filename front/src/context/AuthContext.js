@@ -1,119 +1,170 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext();
-
 export const useAuth = () => useContext(AuthContext);
+
+// Настройка axios
+const API_URL = 'http://localhost:8000/api';
+
+// Добавим перехватчик для автоматической подстановки токена
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [users, setUsers] = useState([]); 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
+  // Проверяем токен при загрузке
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-    const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
-
-    if (storedIsLoggedIn) {
-      setIsLoggedIn(true);
-      setUser(storedUser);
-      setIsAdmin(storedIsAdmin);
-    }
-    
-    setUsers(storedUsers);
-  }, []);
-
-  const register = (email, password, firstName, lastName, phone, gender) => {
-    const newUser = { 
-      id: Date.now(), 
-      email, 
-      password,
-      firstName,
-      lastName,
-      phone,
-      gender,
-      role: users.length === 0 ? 'admin' : 'user',
-      registeredAt: new Date().toISOString()
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await axios.get(`${API_URL}/auth/me`);
+          setUser(response.data);
+          setIsLoggedIn(true);
+          setIsAdmin(response.data.role === 'admin');
+        } catch (error) {
+          console.error('Токен недействителен', error);
+          localStorage.removeItem('token');
+        }
+      }
+      setLoading(false);
     };
     
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-    
-    // Устанавливаем состояние входа
-    setIsLoggedIn(true);
-    setUser(newUser);
-    setIsAdmin(newUser.role === 'admin');
-    
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('user', JSON.stringify(newUser));
-    localStorage.setItem('isAdmin', newUser.role === 'admin' ? 'true' : 'false');
-  };
+    checkAuth();
+  }, []);
 
-  const login = (email, password) => {
-    const foundUser = users.find(u => u.email === email && u.password === password);
-    const bannedUsers = JSON.parse(localStorage.getItem('bannedUsers')) || [];
-    
-    if (foundUser && !bannedUsers.includes(foundUser.id)) {
+  // Регистрация
+  const register = async (email, password, firstName, lastName, phone, gender) => {
+    try {
+      const response = await axios.post(`${API_URL}/auth/register`, {
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+        phone,
+        gender
+      });
+      
+      const { access_token, user } = response.data;
+      
+      localStorage.setItem('token', access_token);
+      setUser(user);
       setIsLoggedIn(true);
-      setUser(foundUser);
-      setIsAdmin(foundUser.role === 'admin');
+      setIsAdmin(user.role === 'admin');
       
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('user', JSON.stringify(foundUser));
-      localStorage.setItem('isAdmin', foundUser.role === 'admin' ? 'true' : 'false');
-      
-      return true;
+      return { success: true };
+    } catch (error) {
+      console.error('Ошибка регистрации', error);
+      return { 
+        success: false, 
+        error: error.response?.data?.detail || 'Ошибка регистрации' 
+      };
     }
-    return false;
   };
 
+  // Вход
+  const login = async (email, password) => {
+    try {
+      // OAuth2 форма требует username, а не email
+      const formData = new URLSearchParams();
+      formData.append('username', email);
+      formData.append('password', password);
+      
+      const response = await axios.post(`${API_URL}/auth/login`, formData, {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
+      
+      const { access_token, user } = response.data;
+      
+      localStorage.setItem('token', access_token);
+      setUser(user);
+      setIsLoggedIn(true);
+      setIsAdmin(user.role === 'admin');
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Ошибка входа', error);
+      return { 
+        success: false, 
+        error: error.response?.data?.detail || 'Неверный email или пароль' 
+      };
+    }
+  };
+
+  // Выход
   const logout = () => {
-    setIsLoggedIn(false);
+    localStorage.removeItem('token');
     setUser(null);
+    setIsLoggedIn(false);
     setIsAdmin(false);
-    
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('user');
-    localStorage.removeItem('isAdmin');
   };
 
-  const deleteUser = (userId) => {
-    if (!isAdmin) return;
-    
-    const updatedUsers = users.filter(u => u.id !== userId);
-    setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  // Для админки - получить всех пользователей
+  const getUsers = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/admin/users`);
+      return response.data;
+    } catch (error) {
+      console.error('Ошибка получения пользователей', error);
+      return [];
+    }
   };
 
-  const toggleUserRole = (userId) => {
-    if (!isAdmin) return;
-    
-    const updatedUsers = users.map(u => {
-      if (u.id === userId) {
-        return { ...u, role: u.role === 'admin' ? 'user' : 'admin' };
+  // Для админки - изменить роль
+  const toggleUserRole = async (userId) => {
+    try {
+      await axios.put(`${API_URL}/admin/users/${userId}/role`);
+      // Обновим текущего пользователя, если это он
+      if (user && user.id === userId) {
+        setUser({ ...user, role: user.role === 'admin' ? 'user' : 'admin' });
+        setIsAdmin(user.role !== 'admin');
       }
-      return u;
-    });
-    
-    setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
+      return true;
+    } catch (error) {
+      console.error('Ошибка изменения роли', error);
+      return false;
+    }
+  };
+
+  // Для админки - удалить пользователя
+  const deleteUser = async (userId) => {
+    try {
+      await axios.delete(`${API_URL}/admin/users/${userId}`);
+      return true;
+    } catch (error) {
+      console.error('Ошибка удаления пользователя', error);
+      return false;
+    }
+  };
+
+  const value = {
+    isLoggedIn,
+    user,
+    isAdmin,
+    loading,
+    register,
+    login,
+    logout,
+    getUsers,
+    toggleUserRole,
+    deleteUser
   };
 
   return (
-    <AuthContext.Provider value={{
-      isLoggedIn,
-      user,
-      users,
-      isAdmin,
-      register,
-      login,
-      logout,
-      deleteUser,
-      toggleUserRole
-    }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
