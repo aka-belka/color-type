@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ColorTheoryPage.css';
 import colorWheelImage from '../assets/circle.png';
+import {  useTheme } from '../App.js';
+import BackgroundImage32 from '../assets/background3.png';
+import BackgroundImage42 from '../assets/background4.png';
+
 const ColorTheoryPage = () => {
   const [activeSection, setActiveSection] = useState('intro');
-  const [savedArticles, setSavedArticles] = useState([]);
+  const { themeMode } = useTheme();
 
   useEffect(() => {
+    
+    window.scrollTo(0, 0)
     const handleScroll = () => {
       const sections = document.querySelectorAll('.theory-section');
       sections.forEach((section) => {
@@ -18,7 +24,10 @@ const ColorTheoryPage = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.scrollTo(0, 0); 
+    };
   }, []);
 
   const scrollToSection = (sectionId) => {
@@ -28,28 +37,20 @@ const ColorTheoryPage = () => {
     }
   };
 
-  const toggleSaveArticle = (articleId) => {
-    if (savedArticles.includes(articleId)) {
-      setSavedArticles(savedArticles.filter(id => id !== articleId));
-    } else {
-      setSavedArticles([...savedArticles, articleId]);
-    }
-  };
-
   return (
-    <div className="theory-page">
+    <div className={`theory-page ${themeMode}-theme`}>
+      {themeMode === 'light' && <img src={BackgroundImage32} className="background-foto32"/>}
+      {themeMode === 'light' && <img src={BackgroundImage42} className="background-foto42"/>}
       <section className="theory-hero">
         <div className="theory-hero-content">
-          <h1 className="theory-title">Теория цвета</h1>
+          <h1 className="theory-title">ТЕОРИЯ ЦВЕТА</h1>
           <p className="theory-subtitle">
-            Цвет — это сила, которая напрямую влияет на душу. Полное руководство по цветотипам, 
+            Цвет - это сила, которая напрямую влияет на душу. Полное руководство по цветотипам, 
             цветовым гармониям и психологии восприятия цвета.
           </p>
           <div className="theory-tags">
             <span className="tag">#КОЛОРИСТИКА</span>
             <span className="tag">#ЦВЕТОВОЙ_КРУГ</span>
-            <span className="tag">#4_СЕЗОНА</span>
-            <span className="tag">#12_ПОДТОНОВ</span>
             <span className="tag">#ГАРМОНИЯ</span>
             <span className="tag">#ПСИХОЛОГИЯ_ЦВЕТА</span>
           </div>
@@ -110,20 +111,20 @@ const ColorTheoryPage = () => {
         <div className="section-header">
           <h2>Цветовой круг Иттена</h2>
         </div>
-
-        <div className="theory-block">
-          <p>Цветовой круг Иттена представляет собой схему из 12 цветов (первичных, вторичных и третичных), которая помогает находить гармоничные цветовые сочетания. Иттен считал, что восприятие цвета работает через контраст. Мы не оцениваем оттенок сам по себе — только в сравнении с другими. Поэтому важной задачей является выстраивание сбалансированного взаимодействия между цветами.</p>
-        </div>
         <div className="color-wheel-content">
           <div className="color-wheel-main">
-            <div>
-              <img src={colorWheelImage} alt="Цветовой круг Иттена" className="color-wheel-container"/>
+
+            <div >
+                <img src={colorWheelImage} alt="Цветовой круг Иттена" className="color-wheel-container"/>
+                <div className="theory-block1">
+                  <p>Цветовой круг Иттена представляет собой схему из 12 цветов (первичных, вторичных и третичных), которая помогает находить гармоничные цветовые сочетания. Иттен считал, что восприятие цвета работает через контраст.</p>
+                </div>
             </div>
 
             <div className="color-theory-detailed">
               <div className="color-category">
                 <p><h3> Первичные цвета</h3>Базовые цвета, которые нельзя получить смешиванием. Все остальные цвета создаются из них.</p>
-                <div className="color-cards">
+                <div className="color-cards1">
                   <div className="color-card">
                     <span className="color-circle" style={{background: '#FF4757'}}></span>
                     <span className="color-name">Красный</span>
@@ -140,10 +141,10 @@ const ColorTheoryPage = () => {
                 </div>
               </div>
 
-              <div className="color-category">
+              <div className="color-category2">
                 
                 <p><h3>Вторичные цвета </h3>Получаются смешиванием двух первичных цветов в равных пропорциях.</p>
-                <div className="color-cards">
+                <div className="color-cards2">
                   <div className="color-card">
                     <span className="color-circle"  style={{background: '#FFA502'}}></span>
                     <span className="color-name">Оранжевый</span>
@@ -160,7 +161,7 @@ const ColorTheoryPage = () => {
               </div>
 
               <div className="color-category ">
-                <p><h3>Третичные цвета </h3>Получаются смешиванием первичного и вторичного цвета.</p>
+                <p className="color-category3"><h3>Третичные цвета </h3>Получаются смешиванием первичного и вторичного цвета.</p>
                 <div className="color-grid-6" >
                   <div className="color-card" >
                     <span className="color-circle"  style={{background: '#FF6B4A'}}></span>
@@ -206,7 +207,7 @@ const ColorTheoryPage = () => {
 
         <div className="seasons-grid-full">
           <div className="season-card-full spring-card">
-            <div className="season-header" style={{background:'#77660d',color: 'white'}}>
+            <div className="season-header" style={{background: '#FFDAB9'}}>
               <h3>Весна</h3>
               <div className="season-tag">Теплый • Светлый • Чистый</div>
             </div>
@@ -259,7 +260,7 @@ const ColorTheoryPage = () => {
           </div>
 
           <div className="season-card-full summer-card">
-            <div className="season-header" style={{background: '#4d770d'}}>
+            <div className="season-header" style={{background: '#D8BFD8'}}>
               <h3>Лето</h3>
               <div className="season-tag">Холодный • Мягкий • Приглушенный</div>
             </div>
@@ -303,7 +304,7 @@ const ColorTheoryPage = () => {
           </div>
 
           <div className="season-card-full autumn-card">
-            <div className="season-header" style={{background: '#773d0d'}}>
+            <div className="season-header" style={{background: '#CD853F'}}>
               <h3>Осень</h3>
               <div className="season-tag">Теплый • Насыщенный • Глубокий</div>
             </div>
@@ -347,7 +348,7 @@ const ColorTheoryPage = () => {
           </div>
 
           <div className="season-card-full winter-card">
-            <div className="season-header" style={{background: '#0d2277'}}>
+            <div className="season-header" style={{background: '#B0C4DE'}}>
               <h3>Зима</h3>
               <div className="season-tag">Холодный • Яркий • Контрастный</div>
             </div>
@@ -356,8 +357,8 @@ const ColorTheoryPage = () => {
                 <h4>Характеристика цветотипа</h4>
                 <ul>
                   <li><strong>Кожа:</strong> Фарфорово-белая с голубоватым отливом, оливковая. Практически не загорает.</li>
-                  <li><strong>Глаза:</strong> Темно-карие, синие, фиолетовые, серо-голубые. Очень яркие, контрастные.</li>
-                  <li><strong>Волосы:</strong> Черные, темно-каштановые, платиновый блонд. С холодным пепельным отливом.</li>
+                  <li><strong>Глаза:</strong> Темно-карие, синие, фиолетовые, серо-голубые. Очень яркие.</li>
+                  <li><strong>Волосы:</strong> Черные, темно-каштановые, платиновый блонд. </li>
                   <li><strong>Губы:</strong> Холодного розового или красного оттенка.</li>
                 </ul>
               </div>
@@ -429,7 +430,7 @@ const ColorTheoryPage = () => {
 
         <div className="subtones-matrix">
           <div className="subtype-block">
-            <h3 className="subtype-block-title spring-title"> Весна</h3>
+            <h3 className="subtype-block-title spring-title"> ВЕСНА</h3>
             <div className="subtype-grid">
               <div className="subtype-detailed">
                 <div className="subtype-header" style={{background: '#FFE4B5'}}>
@@ -464,7 +465,7 @@ const ColorTheoryPage = () => {
             </div>
           </div>
           <div className="subtype-block">
-            <h3 className="subtype-block-title summer-title">Лето</h3>
+            <h3 className="subtype-block-title summer-title">ЛЕТО</h3>
             <div className="subtype-grid">
               <div className="subtype-detailed">
                 <div className="subtype-header" style={{background: '#E6E6FA'}}>
@@ -499,7 +500,7 @@ const ColorTheoryPage = () => {
             </div>
           </div>
           <div className="subtype-block">
-            <h3 className="subtype-block-title autumn-title">Осень </h3>
+            <h3 className="subtype-block-title autumn-title">ОСЕНЬ </h3>
             <div className="subtype-grid">
               <div className="subtype-detailed">
                 <div className="subtype-header" style={{background: '#DEB887'}}>
@@ -535,7 +536,7 @@ const ColorTheoryPage = () => {
           </div>
 
           <div className="subtype-block">
-            <h3 className="subtype-block-title winter-title">Зима</h3>
+            <h3 className="subtype-block-title winter-title">ЗИМА</h3>
             <div className="subtype-grid">
               <div className="subtype-detailed">
                 <div className="subtype-header" style={{background: '#4682B4'}}>
@@ -580,7 +581,7 @@ const ColorTheoryPage = () => {
             Цветовая гармония — это теория сочетания цветов для создания приятного визуального восприятия. 
             Существуют математически выверенные схемы, которые гарантированно работают.
         </p>
-        <p className="theory-subtitle">Универсальное правило 60-30-10 помогает распределять цвета в образе: 60% занимает доминирующий цвет (фон), 
+        <p className="theory-subtitle">Универсальное <strong>правило 60-30-10</strong> помогает распределять цвета в образе: 60% занимает доминирующий цвет (фон), 
               30% — дополнительный и 10% — яркие акценты. Это правило работает в одежде, интерьере, графическом дизайне — везде, где нужно 
               создать сбалансированную цветовую композицию.
         </p >
@@ -594,7 +595,7 @@ const ColorTheoryPage = () => {
               <div className="scheme-bar" style={{background: '#6E9FD1'}}></div>
               <div className="scheme-bar" style={{background: '#A5C8E9'}}></div>
             </div>
-            <h4>Монохромная гармония</h4>
+            <h4>МОНОХРОМНАЯ ГАРМОНИЯ</h4>
             <p className="scheme-desc">Один цвет в разных оттенках и тонах. Всегда выглядит элегантно, создает целостный образ. Идеально для минималистов.</p>
             <div className="scheme-usage">
               <span className="usage-tag">базовый гардероб</span>
@@ -610,7 +611,7 @@ const ColorTheoryPage = () => {
               <div className="scheme-bar" style={{background: '#FFB347'}}></div>
               <div className="scheme-bar" style={{background: '#FFD93D'}}></div>
             </div>
-            <h4>Аналоговая гармония</h4>
+            <h4>АНАЛОГОВАЯ ГАРМОНИЯ</h4>
             <p className="scheme-desc">2-5 соседних цвета в цветовом круге. Создает спокойную, гармоничную композицию. Часто встречается в природе.</p>
             <div className="scheme-usage">
               <span className="usage-tag">повседневный стиль</span>
@@ -624,7 +625,7 @@ const ColorTheoryPage = () => {
               <div className="scheme-bar" style={{background: '#FF4757'}}></div>
               <div className="scheme-bar" style={{background: '#1E90FF'}}></div>
             </div>
-            <h4>Комплементарная гармония</h4>
+            <h4>КОМПЛЕМЕНТАРНАЯ ГАРМОНИЯ</h4>
             <p className="scheme-desc">Противоположные цвета в цветовом круге. Максимальный контраст, энергия и динамика. Привлекает внимание.</p>
             <div className="scheme-usage">
               <span className="usage-tag">вечерние образы</span>
@@ -639,7 +640,7 @@ const ColorTheoryPage = () => {
               <div className="scheme-bar" style={{background: '#2ED573'}}></div>
               <div className="scheme-bar" style={{background: '#FFA502'}}></div>
             </div>
-            <h4>Сплит-комплементарная</h4>
+            <h4>СПЛИТ-КОМПЛЕМЕНТАРНАЯ</h4>
             <p className="scheme-desc">Цвет + два соседа его противоположности. Меньше напряжения, чем в чистой комплементарной, но сохраняет контраст.</p>
             <div className="scheme-usage">
               <span className="usage-tag">смелые образы</span>
@@ -653,15 +654,13 @@ const ColorTheoryPage = () => {
               <div className="scheme-bar" style={{background: '#2ED573'}}></div>
               <div className="scheme-bar" style={{background: '#3742FA'}}></div>
             </div>
-            <h4>Триада</h4>
+            <h4>ТРИАДА</h4>
             <p className="scheme-desc">Три цвета на равном расстоянии в цветовом круге. Сбалансированная, яркая, жизнерадостная комбинация.</p>
             <div className="scheme-usage">
               <span className="usage-tag">праздничные образы</span>
               <span className="usage-tag">детская одежда</span>
             </div>
           </div>
-
-          {/* Тетрада */}
           <div className="harmony-scheme-card">
             <div className="scheme-visual tetrad-scheme">
               <div className="scheme-bar" style={{background: '#FF4757'}}></div>
@@ -669,7 +668,7 @@ const ColorTheoryPage = () => {
               <div className="scheme-bar" style={{background: '#2ED573'}}></div>
               <div className="scheme-bar" style={{background: '#3742FA'}}></div>
             </div>
-            <h4>Тетрада (квадрат)</h4>
+            <h4>ТЕТРАДА</h4>
             <p className="scheme-desc">Четыре равноудаленных цвета. Самая богатая палитра, но требует баланса и опыта в сочетании.</p>
             <div className="scheme-usage">
               <span className="usage-tag">сложные образы</span>

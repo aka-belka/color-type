@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
+import {  useTheme } from '../App.js';
+import BackgroundImage11 from '../assets/background1.png';
+import BackgroundImage21 from '../assets/background2.png';
 
 const LoginPage = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -14,6 +17,7 @@ const LoginPage = () => {
   const [gender, setGender] = useState('');
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const { themeMode } = useTheme();
 
   const { login, register } = useAuth();
   const navigate = useNavigate();
@@ -104,7 +108,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page">
+    <div className={`login-page ${themeMode}-theme`}>
+      <img src={BackgroundImage11} className="background-foto11"/>
+      {isLoginMode && (<img src={BackgroundImage21} className="background-foto21"/>)}
+      {!isLoginMode && (<img src={BackgroundImage21} style={{top: 850}}className="background-foto21"/>)}
       <div className="login-container">
         <h2>{isLoginMode ? 'Вход' : 'Регистрация'}</h2>
         

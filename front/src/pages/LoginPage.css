@@ -7,10 +7,11 @@
 }
 
 .login-container {
-  background: white;
+  background: var(--bg-color1);
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  border: 1px solid #0b400a;
   width: 100%;
   max-width: 450px;
   margin-top: 40px;
@@ -20,7 +21,7 @@
 .login-container h2 {
   text-align: center;
   margin-bottom: 30px;
-  color: #0b400a;
+  color: var(--text-color-pr2);
   font-size: 28px;
 }
 
@@ -33,7 +34,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #555555;
+  color: var(--text-color-pr2);
 }
 
 .form-group input {
@@ -52,19 +53,19 @@
 }
 
 .form-group input.error {
-  border-color: #ff4757;
+  border-color: var(--error1);
 }
 
 .error-text {
-  color: #ff4757;
+  color: var(--error1);
   font-size: 13px;
   margin-top: 5px;
   display: block;
 }
 
 .error-message {
-  background: #bd818137;
-  color: #de2938;
+  background: var(--error);
+  color: #a9111d;
   padding: 12px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -76,7 +77,7 @@
   padding: 14px;
   background: #cfae44;
   color: white;
-  border: none;
+  border: 1px solid #0b400a;
   border-radius: 10px;
   font-size: 16px;
   font-weight: 600;
@@ -89,11 +90,15 @@
 }
 .password input{
     background-color: #bdb08133;
+    
+}
+input[type="radio"] {
+  accent-color: #0b400a; 
 }
 .toggle-mode {
   text-align: center;
   margin-top: 20px;
-  color: #666;
+  color: var(--text-color-pr1);
 }
 
 .toggle-btn {
@@ -128,3 +133,20 @@
   margin-right: 5px;
 }
 
+.background-foto11 {
+  position: absolute;
+  right: 150px;
+  top: 70px;
+  width: 180px;
+  height: auto;
+  pointer-events: none; 
+}
+
+.background-foto21 {
+  position: absolute;
+  left: 150px;
+  top: 440px;
+  width: 150px;
+  height: auto;
+  pointer-events: none; 
+}

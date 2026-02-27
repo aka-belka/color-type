@@ -4,7 +4,6 @@
   max-width: 1400px;
 }
 
-/* Герой секция */
 .theory-hero {
   border-radius: 24px;
   padding: 0px 40px;
@@ -21,7 +20,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="3" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="3" fill="white" opacity="0.1"/><circle cx="50" cy="50" r="5" fill="white" opacity="0.05"/></svg>');
   opacity: 0.3;
 }
 
@@ -36,13 +34,15 @@
 
 .theory-subtitle {
   font-size: 22px;
-  max-width: 900px;
+  padding-left: 40px;
+  padding-right: 40px;
   margin: 0 auto 30px;
   opacity: 0.95;
   line-height: 1.6;
   position: relative;
   animation: fadeInUp 1s ease;
-    color: black;
+  color: var(--text-color);
+  font-style: italic;
 }
 
 .theory-tags {
@@ -58,24 +58,21 @@
 .theory-tags .tag {
   padding: 10px 22px;
   border-radius: 30px;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 500;
   letter-spacing: 0.5px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Навигация по разделам */
 .section-navigation {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background-color: var(--bg-color4);
   border-radius: 50px;
   margin: 30px 0 40px;
   padding: 8px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid #0b400a;
 }
 
 .nav-container {
@@ -91,11 +88,11 @@
   background: none;
   border-radius: 40px;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: 600;
-  color: #666;
+  font-size: 17px;
+  color: var(--text-color);
   transition: all 0.3s;
   white-space: nowrap;
+  font-family: 'appetite';
 }
 
 .nav-section-btn:hover {
@@ -106,19 +103,22 @@
   color: #cfae44;
 }
 
-/* Общие стили секций */
 .theory-section {
-  margin-bottom: 80px;
+  margin-bottom: 40px;
   scroll-margin-top: 100px;
 }
+.intro-content{
+  padding-left: 40px;
+  padding-right: 40px;
 
+}
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid #cfae44;
 }
 
 .section-header h2 {
@@ -139,32 +139,33 @@
   border-radius: 2px;
 }
 
-.lead-text {
-  font-size: 20px;
-  line-height: 1.8;
-  color: #555;
-  margin-bottom: 40px;
-  padding: 25px;
-  background-color: #f8f9fa;
-  border-radius: 16px;
-  border-left: 6px solid #0b400a;
+.theory-block1 {
+  margin-bottom: 0px;
 }
-
+.theory-block1 h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+.theory-block1 p{
+  font-size: 19px;
+}
 .theory-block {
   margin-bottom: 35px;
 }
-
 .theory-block h3 {
   font-size: 24px;
   color: #333;
   margin-bottom: 20px;
 }
-
-/* Цветовой круг */
+.theory-block p{
+  font-size: 19px;
+}
 .color-wheel-content {
-  background: white;
+  background: none;
   border-radius: 24px;
   padding: 40px;
+  padding-top: 0px;
   padding-bottom: 0px;
 }
 
@@ -183,30 +184,62 @@
   width: 400px;
   height: 400px;
 }
+.color-theory-detailed{
+  padding-top:50px
+}
+
+
+.color-category2 {
+  padding-top: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  border-bottom: 1px solid var(--border-color2);
+  padding-bottom: 25px;
+}
+.color-category2 h3 {
+  font-size: 20px;
+  margin: 0 0 10px 0;
+  color: var(--text-color-pr1);
+  min-width: 180px;
+  font-style: normal;
+}
+.color-category2 p {
+  margin: 0;
+  color: var(--text-color6);
+  line-height: 1.5;
+  max-width: 300px;
+  font-style: italic;
+}
 
 .color-category {
   margin-bottom: 15px;
   display: flex;
   align-items: flex-start;
   gap: 30px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color2);
   padding-bottom: 25px;
 }
 .color-category:last-child {
   border-bottom: none;
 }
-
+.color-category3{
+  padding-top: 70px;
+}
 .color-category h3 {
   font-size: 20px;
   margin: 0 0 10px 0;
-  color: #333;
+  color: var(--text-color-pr1);
   min-width: 180px;
+  font-style: normal;
 }
 .color-category p {
   margin: 0;
-  color: #666;
+  color: var(--text-color6);
   line-height: 1.5;
   max-width: 300px;
+  font-style: italic;
 }
 .color-cards {
   display: flex;
@@ -216,7 +249,18 @@
   flex-wrap: wrap;
   justify-content: flex-end;
 }
-
+.color-cards2{
+  display: flex;
+  gap: 58px;
+  margin-left:16px;
+  flex:1;
+}
+.color-cards1{
+  display: flex;
+  gap: 65px;
+  margin-left:18px;
+  flex:1;
+}
 .color-card{
   display: flex;
   flex-direction: column;
@@ -238,6 +282,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border: 1px solid #0b400a;
 }
 
 .color-card:hover {
@@ -251,9 +296,9 @@
   visibility: hidden;
   opacity: 0;
   font-size: 14px;
-  font-weight: 600;
   text-align: center;
   transition: opacity 0.3s, visibility 0.3s;
+  color: var(--text-color-pr2);
 }
 
 
@@ -265,7 +310,6 @@
   margin: 0px;
 }
 
-/* 4 сезона */
 .seasons-grid-full {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -274,12 +318,11 @@
 }
 
 .season-card-full {
-  background: white;
+  background: none;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s;
-  border: 1px solid #f0f0f0;
-  
+  border: 2px solid var(--border-color2);
   border-radius: 15px;
 }
 
@@ -290,14 +333,11 @@
 
 .season-header {
   padding: 30px 40px;
-  color: white;
+  color: black;
   display: flex;
   align-items: center;
   gap: 20px;
-}
-
-.season-icon-large {
-  font-size: 48px;
+  border-bottom: 2px solid var(--border-color2);
 }
 
 .season-header h3 {
@@ -314,6 +354,7 @@
   font-size: 14px;
   font-weight: 600;
   margin-left: auto;
+  border: 2px dashed black;
 }
 
 .season-body {
@@ -321,11 +362,11 @@
 }
 
 .season-physics h4,
-.season-palette h4,
-.season-wrong h4 {
+.season-palette h4{
   font-size: 20px;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text-color-pr1);
+  margin-top: 0px;
 }
 
 .season-physics ul {
@@ -334,9 +375,9 @@
 }
 
 .season-physics li {
-  padding: 10px 0 10px 25px;
+  padding: 10px 0 10px 20px;
   position: relative;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #0b400a;
 }
 
 .season-physics li:last-child {
@@ -376,32 +417,17 @@
   flex: 1.5;
 }
 
-.wrong-colors {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.wrong-colors span {
-  padding: 8px 16px;
-  border-radius: 30px;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  width: 50px;
-}
-
 .seasons-conclusion {
-  margin-top: 50px;
   padding: 40px;
-  background: #0b400a;
+  padding-top: 10px;
+  align-items: center;
+  justify-items: center;
 }
 
 .seasons-conclusion h4 {
-  font-size: 24px;
+  font-size: 30px;
   margin-bottom: 30px;
-  color:white;
+  color:var(--text-color);
 }
 
 .test-methods {
@@ -413,27 +439,29 @@
 .test-method {
   display: flex;
   gap: 20px;
-  background: white;
   padding: 25px;
+  padding-top: 0px;
   border-radius: 16px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+  border: 2px dashed var(--border-color2);
+  text-align: center;
+  background: #DCEDC1;
 }
 
 
 .method-content h5 {
   font-size: 18px;
   margin-bottom: 8px;
-  color: #333;
+  color: black;
 }
 
 .method-content p {
-  color: #666;
+  color: black;
   line-height: 1.6;
   margin: 0;
   font-size: 15px;
+  font-style: italic;
 }
 
-/* 12 подтонов */
 .subtones-matrix {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -442,24 +470,21 @@
 }
 
 .subtype-block {
-  background: white;
+  background: none;
   border-radius: 24px;
   padding: 30px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f0f0f0;
+  border: 2px solid var(--border-color2);
 }
 
 .subtype-block-title {
   font-size: 24px;
   margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 3px solid;
+  border-bottom: 1px solid var(--text-color);;
+  color: var(--text-color)
 }
 
-.spring-title { color: black; border-bottom-color: black; }
-.summer-title { color: black; border-bottom-color: black; }
-.autumn-title { color: black; border-bottom-color: black; }
-.winter-title { color: black; border-bottom-color: black; }
 
 .subtype-grid {
   display: flex;
@@ -468,10 +493,11 @@
 }
 
 .subtype-detailed {
-  background: #f8f9fa;
+  background: none;
   border-radius: 16px;
   overflow: hidden;
   transition: transform 0.3s;
+  border: 2px dashed var(--border-color2);
 }
 
 .subtype-detailed:hover {
@@ -482,13 +508,10 @@
 .subtype-header {
   padding: 20px;
   color: black;
-  display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.subtype-icon {
-  font-size: 24px;
+  border-bottom: 2px dashed #0b400a;
+  text-align: center;
 }
 
 .subtype-header h4 {
@@ -504,7 +527,7 @@
 .subtype-content p {
   margin: 0 0 12px;
   font-size: 14px;
-  color: #666;
+  color: var(--text-color);
   line-height: 1.6;
 }
 
@@ -512,7 +535,6 @@
   margin-bottom: 0;
 }
 
-/* Цветовые гармонии */
 .harmony-schemes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -521,18 +543,18 @@
 }
 
 .harmony-scheme-card {
-  background: white;
+  background: none;
   border-radius: 20px;
   padding: 25px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f0f0f0;
+  border: 2px dashed var(--border-color2);
   transition: all 0.3s;
+  text-align: center;
 }
 
 .harmony-scheme-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(102, 126, 234, 0.1);
-  border-color: #667eea;
 }
 
 .scheme-visual {
@@ -541,263 +563,49 @@
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 20px;
+  border: 1px solid var(--border-color2);
 }
 
 .scheme-bar {
   flex: 1;
   transition: flex 0.3s;
+  border-right: 1px solid var(--border-color2);
 }
 
 .harmony-scheme-card:hover .scheme-bar {
   flex: 1.2;
 }
-
+.scheme-bar:last-child {
+  border-right: none;
+}
 .harmony-scheme-card h4 {
   font-size: 20px;
   margin-bottom: 12px;
-  color: #333;
+  color: var(--text-color-pr1);
 }
 
 .scheme-desc {
-  color: #666;
+  color: var(--text-color);
   line-height: 1.6;
   margin-bottom: 15px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .scheme-usage {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .usage-tag {
   padding: 4px 12px;
-  background: #f0f0f0;
   border-radius: 20px;
   font-size: 12px;
-  color: #666;
+  color:  var(--text-color);
+  border: 1px solid var(--border-color2);
 }
 
-.rule-60-30-10 {
-  margin-top: 50px;
-  padding: 40px;
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-}
-
-.rule-content {
-  display: grid;
-  grid-template-columns: 0.5fr 1fr;
-  gap: 40px;
-  align-items: center;
-}
-
-.rule-pie {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.pie-segment {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 18px;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.rule-explanation p {
-  margin-bottom: 15px;
-  font-size: 16px;
-  color: #555;
-}
-
-.rule-percent {
-  display: inline-block;
-  padding: 4px 12px;
-  background: #667eea;
-  color: white;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 700;
-  margin-right: 10px;
-}
-
-.rule-note {
-  margin-top: 20px;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 12px;
-  font-style: italic;
-  color: #666;
-}
-
-.tips-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  margin-top: 30px;
-}
-
-.tip-card {
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f0f0f0;
-  transition: all 0.3s;
-}
-
-.tip-card:hover {
-  border-color: #667eea;
-  transform: translateY(-3px);
-}
-
-.tip-icon {
-  font-size: 32px;
-  margin-bottom: 15px;
-  display: block;
-}
-
-.tip-card h4 {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #333;
-}
-
-.tip-card p {
-  color: #666;
-  line-height: 1.6;
-  margin: 0;
-  font-size: 14px;
-}
-
-/* Психология цвета */
-.psychology-deep {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  margin: 40px 0;
-}
-
-.psychology-color-card {
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
-  transition: transform 0.3s;
-  border: 1px solid #f0f0f0;
-}
-
-.psychology-color-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-.psychology-header {
-  padding: 25px;
-  color: white;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.psychology-emoji {
-  font-size: 32px;
-}
-
-.psychology-header h3 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.psychology-body {
-  padding: 25px;
-}
-
-.psychology-effects {
-  margin-bottom: 20px;
-}
-
-.effect-positive,
-.effect-negative {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.effect-icon {
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-.effect-positive .effect-icon { color: #2ED573; }
-.effect-negative .effect-icon { color: #FF4757; }
-
-.psychology-facts p {
-  margin: 0 0 10px;
-  font-size: 14px;
-  color: #666;
-  line-height: 1.6;
-}
-
-.psychology-facts p:last-child {
-  margin-bottom: 0;
-}
-
-.psychology-conclusion {
-  margin-top: 50px;
-  padding: 40px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  border-radius: 24px;
-}
-
-.psychology-conclusion h3 {
-  font-size: 28px;
-  margin-bottom: 20px;
-}
-
-.message-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.message-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 12px;
-  backdrop-filter: blur(5px);
-}
-
-.message-color {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-}
-
-/* Финальный CTA */
 .theory-final-cta {
   margin: 80px 0 40px;
   padding: 80px 40px;
@@ -833,7 +641,8 @@
   font-size: 20px;
   margin-bottom: 35px;
   opacity: 0.95;
-  color: black;
+  color: var(--text-color);
+  font-style: italic;
 }
 
 .cta-buttons {
@@ -869,7 +678,6 @@
   font-weight: 600;
   font-size: 18px;
   transition: all 0.3s;
-  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .cta-secondary:hover {
@@ -877,30 +685,7 @@
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
 }
 
-/* Информационные боксы */
-.info-box {
-  background: linear-gradient(135deg, #66ea8b10, #8ea24b10);
-  border-left: 6px solid #0b400a;
-  padding: 25px;
-  border-radius: 16px;
-  margin: 30px 0;
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
 
-.info-icon {
-  font-size: 28px;
-}
-
-.info-box p {
-  margin: 0;
-  color: #444;
-  line-height: 1.7;
-  font-size: 16px;
-}
-
-/* Анимации */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -921,135 +706,20 @@
   animation: fadeIn 1s ease;
 }
 
-/* Адаптивность */
-@media (max-width: 1200px) {
-  .intro-grid,
-  .characteristics-grid,
-  .harmony-schemes,
-  .psychology-deep,
-  .tips-grid,
-  .message-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .color-wheel-main,
-  .rule-content {
-    grid-template-columns: 1fr;
-  }
-
-  .subtype-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.background-foto32 {
+  position: absolute;
+  right: 0;
+  top: 6700px;
+  width: 200px;
+  height: auto;
+  pointer-events: none; 
 }
 
-@media (max-width: 768px) {
-  .theory-title {
-    font-size: 36px;
-  }
-
-  .theory-subtitle {
-    font-size: 18px;
-  }
-
-  .section-navigation {
-    border-radius: 20px;
-  }
-
-  .nav-container {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 5px;
-    justify-content: flex-start;
-  }
-
-  .nav-section-btn {
-    white-space: nowrap;
-    padding: 10px 16px;
-    font-size: 14px;
-  }
-
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .intro-grid,
-  .characteristics-grid,
-  .harmony-schemes,
-  .psychology-deep,
-  .tips-grid,
-  .message-grid,
-  .subtype-grid,
-  .test-methods {
-    grid-template-columns: 1fr;
-  }
-
-  .season-header {
-    flex-direction: column;
-    text-align: center;
-    border-radius: 15px;
-  }
-
-  .season-tag {
-    margin-left: 0;
-  }
-
-  .season-body {
-    padding: 25px;
-  }
-
-  .palette-row {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .palette-color {
-    height: 50px;
-  }
-
-  .cta-buttons {
-    flex-direction: column;
-  }
-
-  .final-cta-container h2 {
-    font-size: 32px;
-  }
-
-  .color-circle-large {
-    width: 280px;
-    height: 280px;
-  }
-}
-
-@media (max-width: 480px) {
-  .theory-hero {
-    padding: 40px 20px;
-  }
-
-  .theory-title {
-    font-size: 28px;
-  }
-
-  .theory-subtitle {
-    font-size: 16px;
-  }
-
-  .theory-tags .tag {
-    padding: 6px 14px;
-    font-size: 12px;
-  }
-
-  .section-header h2 {
-    font-size: 28px;
-  }
-
-  .color-circle-large {
-    width: 240px;
-    height: 240px;
-  }
-
-  .color-cards {
-    flex-direction: column;
-  }
+.background-foto42 {
+  position: absolute;
+  left: 0;
+  top: 6950px;
+  width: 200px;
+  height: auto;
+  pointer-events: none; 
 }

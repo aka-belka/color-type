@@ -1,24 +1,62 @@
-.App {
-  text-align: center;
+:root {
+  --primary: #ffffff;
+  --secondary: black;
+  --third: #0b400a;
+  --bg-color1: white;
+  --bg-color2: white;
+  --bg-color3: #f8f9fa;
+  --bg-color4: white;
+
+  --text-color: black;
+  --text-color-pr: black;
+  --text-color-pr1: #333;
+  --text-color-pr2:#0b400a;
+  --text-color3: #999;
+  --text-color4:white;
+  --text-color5: #42a73f;
+  --text-color6: #666;
+
+  --border-color1:#e0e0e0;
+  --border-color2:#0b400a;
+
+  --btn-color: #ff4757;
+  --error: #bd818137;
+  --error1:#ff4757;
+
+  --opacity: 0.5;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root.dark-theme {
+  --primary: #0b400a;
+  --secondary: #cfae44;
+  --third: #0b1c0b;
+  --bg-color1: #4a8949;
+  --bg-color2: #79c178;
+  --bg-color3: #6a9a69;
+  --bg-color4: #0b1c0b;
+
+  --text-color: white;
+  --text-color-pr: rgb(218, 211, 211);
+  --text-color-pr1: rgb(218, 211, 211);
+  --text-color-pr2: white;
+  --text-color3: #0b400a;
+  --text-color4:rgb(218, 211, 211);
+  --text-color5: rgb(200, 239, 192);
+  --text-color6: #bfbcbc;
+
+  --border-color1: #0b400a;
+  --border-color2:white;
+
+  --btn-color: #a9111d;
+  --error:#f3d3d3a7;
+  --error1:#670c13;
+
+  --opacity: 1;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.App{
+  background-color: var(--primary);
+  font-family: 'appetite';
+  src: url('assets/fonts/appetite.ttf') format('truetype');
 }
-
-.App-link {
-  color: #61dafb;
-}
-
