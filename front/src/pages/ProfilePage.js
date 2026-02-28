@@ -7,13 +7,17 @@ import BackgroundImage43 from '../assets/background4.png';
 import BackgroundImage13 from '../assets/background1.png';
 
 const ProfilePage = () => {
-    const { user, logout, isAdmin } = useAuth();
+    const { user, logout, isAdmin,loading } = useAuth();
     const [savedResults, setSavedResults] = useState([]);
     const [savedPalettes, setSavedPalettes] = useState([]);
     const navigate = useNavigate();
     const [selectedResult, setSelectedResult] = useState(null);
     const { themeMode } = useTheme();
-
+    useEffect(() => {
+        if (!user && !loading) { 
+            navigate('/login');
+        }
+    }, [user, loading, navigate]);
     useEffect(() => {
         if (user) {
             
@@ -26,7 +30,7 @@ const ProfilePage = () => {
             const palettes = palettesCompressed ? decompress(palettesCompressed) : [];
             setSavedPalettes(palettes);
     }
-    }, [user]);
+    }, [user, loading, navigate]);
 
     const openResultModal = (result) => {
         setSelectedResult(result);
@@ -54,7 +58,6 @@ const ProfilePage = () => {
     };
 
     if (!user) {
-        navigate('/login');
         return null;
     }
 
@@ -65,8 +68,8 @@ const ProfilePage = () => {
             <div className="profile-container">
                 <h2>Профиль</h2>
                 <div className="profile-info">
-                    <p><strong>Имя:</strong> {user.firstName }</p>
-                    <p><strong>Фамилия:</strong> {user.lastName }</p>
+                    <p><strong>Имя:</strong> {user.first_name }</p>
+                    <p><strong>Фамилия:</strong> {user.last_name }</p>
                     <p><strong>Пол:</strong> {user.gender === 'male' ? 'Мужской' : 'Женский'}</p>
                     <p><strong>Email:</strong> {user.email}</p>
                     <p><strong>Телефон:</strong> {user.phone}</p>

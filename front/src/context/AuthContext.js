@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
 
   // Проверяем токен при загрузке
   useEffect(() => {
@@ -112,6 +113,15 @@ export const AuthProvider = ({ children }) => {
     setIsAdmin(false);
   };
 
+  const loadUsers = async () => {
+    try {
+      const usersData = await getUsers();
+      setUsers(usersData);
+    } catch (error) {
+      console.error('Ошибка загрузки пользователей:', error);
+    }
+  };
+
   // Для админки - получить всех пользователей
   const getUsers = async () => {
     try {
@@ -127,6 +137,7 @@ export const AuthProvider = ({ children }) => {
   const toggleUserRole = async (userId) => {
     try {
       await axios.put(`${API_URL}/admin/users/${userId}/role`);
+      await loadUsers(); 
       // Обновим текущего пользователя, если это он
       if (user && user.id === userId) {
         setUser({ ...user, role: user.role === 'admin' ? 'user' : 'admin' });
@@ -143,6 +154,7 @@ export const AuthProvider = ({ children }) => {
   const deleteUser = async (userId) => {
     try {
       await axios.delete(`${API_URL}/admin/users/${userId}`);
+      await loadUsers();
       return true;
     } catch (error) {
       console.error('Ошибка удаления пользователя', error);
@@ -153,6 +165,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     isLoggedIn,
     user,
+    users,
     isAdmin,
     loading,
     register,

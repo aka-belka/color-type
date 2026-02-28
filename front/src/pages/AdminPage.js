@@ -6,7 +6,7 @@ import {  decompress, useTheme } from '../App.js';
 
 
 const AdminPage = () => {
-  const { users, isAdmin, deleteUser, toggleUserRole } = useAuth();
+  const { users, isAdmin, deleteUser, toggleUserRole, loadUsers, loading } = useAuth();
   const [bannedUsers, setBannedUsers] = useState([]);
   const [stats, setStats] = useState({
     totalAIAnalyses: 0,
@@ -23,9 +23,15 @@ const AdminPage = () => {
       return;
     }
 
+    loadUsers?.();
     loadBannedUsers();
-    loadStatistics();
   }, [isAdmin, navigate]);
+
+  useEffect(() => {
+    if (users && users.length > 0) {
+      loadStatistics();
+    }
+  }, [users]);
 
   const loadBannedUsers = () => {
     const banned = JSON.parse(localStorage.getItem('bannedUsers')) || [];
