@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
-from app.api.endpoints import auth, admin
+from app.api.endpoints import auth, admin, palettes
 from app.core.database import engine
-from app.models import user
+from app.models import user, palette
 
 user.Base.metadata.create_all(bind=engine)
+palette.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Color Type API",
@@ -58,6 +59,7 @@ app.openapi = custom_openapi
 
 app.include_router(auth.router, prefix="/api")
 app.include_router(admin.router, prefix="/api")
+app.include_router(palettes.router, prefix="/api")
 
 @app.get("/")
 async def root():

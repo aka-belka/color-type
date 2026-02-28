@@ -10,17 +10,13 @@ class Palette(Base):
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     name = Column(String, nullable=False)
     description = Column(String, nullable=True)
-    colors = Column(JSON, nullable=False)  
-    is_ai_generated = Column(Boolean, default=False)  
-    color_type = Column(String, nullable=True)  
-    is_public = Column(Boolean, default=False)  
+    colors = Column(JSON, nullable=False)  # массив HEX-цветов
+    is_ai_generated = Column(Boolean, default=False)
+    color_type = Column(String, nullable=True)  # spring/summer/autumn/winter
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
+    # Связь с пользователем
     user = relationship("User", back_populates="palettes")
     
     def __repr__(self):
         return f"<Palette {self.name} by user {self.user_id}>"
-
-from app.models.user import User
-User.palettes = relationship("Palette", back_populates="user", cascade="all, delete-orphan")
