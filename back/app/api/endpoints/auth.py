@@ -111,4 +111,36 @@ def read_users_me(
     
     return user
 
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+):
+    """Получить текущего пользователя по токену"""
+    payload = decode_token(token)
+    if not payload:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Недействительный токен"
+        )
+    
+    user = UserService.get_by_id(db, payload.get("user_id"))
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Пользователь не найден"
+        )
+    
+    return user
 
+async def get_current_admin(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+):
+    """Получить текущего пользователя и проверить, что он админ"""
+    user = await get_current_user(token, db)
+    if user.role != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Недостаточно прав"
+        )
+    return user

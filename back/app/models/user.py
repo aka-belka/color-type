@@ -19,6 +19,7 @@ class User(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     palettes = relationship("Palette", back_populates="user", cascade="all, delete-orphan")
+    analyses = relationship("Analysis", back_populates="user", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<User {self.email}>"
