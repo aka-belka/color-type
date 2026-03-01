@@ -77,6 +77,17 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('user');
     localStorage.removeItem('isAdmin');
+
+    localStorage.removeItem('ai_currentPhoto');
+    localStorage.removeItem('ai_currentResult');
+    localStorage.removeItem('manual_currentPhoto');
+
+      localStorage.removeItem('manual_selectedColor');
+      localStorage.removeItem('manual_customPalette');
+      localStorage.removeItem('manual_activeIndex');
+      localStorage.removeItem('manual_hue');
+      localStorage.removeItem('manual_saturation');
+      localStorage.removeItem('manual_lightness');
   };
 
   const deleteUser = (userId) => {

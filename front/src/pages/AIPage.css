@@ -8,7 +8,7 @@
 }
 
 .AI-hero-title {
-    margin-top:70px;
+    margin-top:55px;
     font-size: 40px;
     color: #cfae44;
     margin-bottom: 20px;
@@ -23,14 +23,39 @@
   margin-left: auto;
   margin-right: auto;
   font-weight:700;
-  font-style: italic;
 }
 .foto-result-section{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    min-height: 600px;
 }
-.foto-result-section > :only-child {
-  grid-column: span 2;
+
+.foto-column {
+    grid-column: 1;
+    transition: all 0.3s ease;
+}
+
+.foto-column.centered {
+    grid-column: 1 / -1; 
+    display: flex;
+    justify-content: center;
+}
+.foto-column.centered .foto-section {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
+}
+.result-column {
+    grid-column: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
 }
 .foto-section{
     max-width: 500px;
@@ -46,12 +71,16 @@
 
 .foto{
     padding: 70px 70px 70px 70px;
-    background-color: rgb(246, 246, 246);
-    border-radius: 15px;
+    background: rgba(238, 238, 238, 0.9);
     margin-bottom: 20px;
     font-size: 18px;
-    border: 3px rgb(153, 153, 153);
-    border-style: dotted;
+    border: 4px dashed #0b400a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    transition: all 0.3s;
 }
 .AI-btn:hover {
     transform: translateY(-3px);
@@ -62,7 +91,6 @@
   font-size: 14px;
   color: var(--text-color-pr1);
   margin: 5px 0 15px 0;
-  font-style: italic;
 }
 
 .foto-preview {
@@ -79,19 +107,18 @@
     border: 2px solid #0b400a;
 }
 .AI-btn{
-    background-color: #cfae44;
+    background: #20941e;
     color: white;
     padding: 12px 30px;
     border-radius: 30px;
-    border: none;
+    border: 1px solid var(--border-color2);
     font-weight: 600;
     font-size: 16px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    font-family: 'appetite';
 }
 .change-photo-btn-ai {
-    background: #0b400a;
+    background-color: #cfae44;
     color: white;
     border: 1px solid var(--border-color2);
     padding: 12px 20px;
@@ -100,7 +127,6 @@
     font-weight: 600;
     font-size: 16px;
     transition: all 0.3s;
-    font-family: 'appetite';
 }
 .button-container {
     display: flex;
@@ -120,14 +146,13 @@
 }
 .foto {
     cursor: pointer;
-    transition: all 0.3s;
 }
 .foto p{
   color: #333;
 }
 .foto:hover {
-    background-color: #f0f0f0;
-    border-color: #0b400a;
+    background-color: rgba(216, 215, 215, 0.9);
+    transform: scale(1.01);
 }
 
 .AI-btn:disabled {
@@ -146,8 +171,7 @@
   border-radius: 10px;
   text-align: center;
   max-width: 800px;
-  margin-left:  auto;
-  margin-right:  auto;
+  margin:auto;
 }
 .result-info{
   display: grid;
@@ -215,7 +239,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s;
-  font-family: 'appetite';
 }
 
 .modal-login-btn:hover {
@@ -238,7 +261,6 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
-  font-family: 'appetite';
 }
 
 .save-result-btn:hover {
@@ -311,7 +333,7 @@
 .background-foto31 {
   position: absolute;
   right: 0;
-  top: 700px;
+  top: 150px;
   width: 200px;
   height: auto;
   pointer-events: none; 
@@ -320,8 +342,40 @@
 .background-foto41 {
   position: absolute;
   left: 0;
-  top: 100px;
+  top: 120px;
   width: 200px;
   height: auto;
   pointer-events: none; 
+}
+
+
+.analyzing-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    text-align: center;
+    display: flex !important; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    font-size: 25px;
+    color: var(--text-color);
+    margin: auto;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #b7b6b6;
+    border-top: 6px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+    display: block !important; 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

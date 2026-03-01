@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './AIPage.css';
 import { compress, decompress, useTheme  } from '../App.js';
 import imageCompression from 'browser-image-compression';
-import BackgroundImage2 from '../assets/background2.png';
 import BackgroundImage3 from '../assets/background3.png';
 import BackgroundImage4 from '../assets/background4.png';
+import FotoImage from '../assets/foto.png';
 
 const AIPage = () => {
     const [userPhoto, setUserPhoto] = useState(null);
@@ -16,6 +16,7 @@ const AIPage = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [saveSuccess, setSaveSuccess] = useState(false);
     const { themeMode } = useTheme();
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
 
     const { isLoggedIn, user } = useAuth();
     const navigate = useNavigate();
@@ -26,7 +27,9 @@ const AIPage = () => {
             setPhotoFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
-                setUserPhoto(reader.result);
+                const photoData = reader.result;
+                setUserPhoto(photoData);
+                localStorage.setItem('ai_currentPhoto', photoData);
             };
             reader.readAsDataURL(file);
         }
@@ -34,6 +37,7 @@ const AIPage = () => {
 
     const handleAnalyze = async () => {
         if (!isLoggedIn) {
+            localStorage.setItem('redirectAfterLogin', '/ai'); 
             setShowLoginModal(true);
             return;
         }
@@ -41,6 +45,7 @@ const AIPage = () => {
         if (!photoFile) return;
 
         setIsLoading(true);
+        setIsAnalyzing(true);
 
         const formData = new FormData();
         formData.append('photo', photoFile);
@@ -57,8 +62,10 @@ const AIPage = () => {
 
             const data = await response.json();
             setResult(data);
+            localStorage.setItem('ai_currentResult', JSON.stringify(data));
         } catch (error) {
             console.error('Ошибка при анализе:', error);
+            await new Promise(resolve => setTimeout(resolve, 5000));
             const testResults = [
                 {
                     season: 'Весна',
@@ -110,8 +117,10 @@ const AIPage = () => {
             const data = testResults[randomIndex];
 
             setResult(data);
+            localStorage.setItem('ai_currentResult', JSON.stringify(data));
         } finally {
             setIsLoading(false);
+            setIsAnalyzing(false);
         }
     };
 
@@ -153,6 +162,24 @@ const AIPage = () => {
         setTimeout(() => setSaveSuccess(false), 2000);
     };
 
+    useEffect(() => {
+        const savedPhoto = localStorage.getItem('ai_currentPhoto');
+        const savedResult = localStorage.getItem('ai_currentResult');
+        if (savedPhoto) {
+            setUserPhoto(savedPhoto);
+        
+            fetch(savedPhoto)
+                .then(res => res.blob())
+                .then(blob => {
+                    const file = new File([blob], "photo.jpg", { type: "image/jpeg" });
+                    setPhotoFile(file);
+                })
+                .catch(err => console.error('Ошибка восстановления файла:', err));
+            }
+        if (savedResult) {
+            setResult(JSON.parse(savedResult));
+        }
+    }, []);
     return (
         <div className={`AI-page ${themeMode}-theme`}>
             {themeMode === 'light' &&  <img src={BackgroundImage4} className="background-foto41"/>}
@@ -160,51 +187,63 @@ const AIPage = () => {
                 <h1 className="AI-hero-title">ОПРЕДЕЛИМ ЦВЕТОТИП ПО ФОТО </h1>
                 <p className="AI-hero-subtitle">Пройдите сезонный тест онлайн за секунды, бесплатно и без регистрации. Загрузите фото лица и головы и узнайте свой цветотип. Это поможет вам выбрать идеальные цветовые решения и подчеркнуть свою природную красоту.</p>
             </section>
-            {themeMode === 'light' && !result  && (<img src={BackgroundImage3} style={{top : 500}} className="background-foto31"/>)}
-            {themeMode === 'light' && result && isLoggedIn && (<img src={BackgroundImage3} className="background-foto31"/>)}
+            {themeMode === 'light' && (<img src={BackgroundImage3} className="background-foto31"/>)}
             <section className="foto-result-section">
-                <section className="foto-section">
-                    <p className="foto-title">ЗАГРУЗИТЕ ФОТО ЛИЦА И ГОЛОВЫ: </p>
-                    <p className="foto-hint">Пожалуйста, убедитесь, что освещение хорошее, лицо хорошо видно, без фильтров и сильного макияжа</p>
-                
-                    {userPhoto ? (
-                        <div className="foto-preview">
-                        <img src={userPhoto} alt="User" className="preview-img" />
-                        </div>
-                    ) : (
-                        <div className="foto" onClick={() => document.getElementById('photo-upload-ai').click()}>
-                            <p>Нажмите, чтобы выбрать PNG, JPG, WEBP</p>
-                        </div>
-                    )}
+                <div  className={`foto-column ${!result && !isLoading ? 'centered' : ''}`}>
+                    <section className="foto-section">
+                        <p className="foto-title">ЗАГРУЗИТЕ ФОТО ЛИЦА И ГОЛОВЫ: </p>
+                        <p className="foto-hint">Пожалуйста, убедитесь, что освещение хорошее, лицо хорошо видно, без фильтров и сильного макияжа</p>
                     
-                    <input
-                        id="photo-upload-ai"
-                        type="file"
-                        accept="image/*"
-                        onChange={handlePhotoUpload}
-                        style={{ display: 'none' }}
-                    />
-                    
-                    <div className="button-container">
-                        <button 
-                            className="change-photo-btn-ai"
-                            disabled={!userPhoto || isLoading}
-                            onClick={() => document.getElementById('photo-upload-ai').click()}
-                        >
-                            Изменить фото
-                        </button>
+                        {userPhoto ? (
+                            <div className="foto-preview">
+                            <img src={userPhoto} alt="User" className="preview-img" />
+                            </div>
+                        ) : (
+                            <div className="foto" onClick={() => document.getElementById('photo-upload-ai').click()}>
+                                <img src={FotoImage} alt="Фотоаппарат" className="upload-icon"/>
+                                <p>Добавить фото</p>
+                            </div>
+                        )}
                         
-                        <button 
-                            className="AI-btn" 
-                            disabled={!userPhoto || isLoading}
-                            onClick={handleAnalyze}
-                        >
-                            {isLoading ? 'Анализ...' : 'Узнайте цветотип бесплатно!'}
-                        </button>
+                        <input
+                            id="photo-upload-ai"
+                            type="file"
+                            accept="image/*"
+                            onChange={handlePhotoUpload}
+                            style={{ display: 'none' }}
+                        />
+                        
+                        <div className="button-container">
+                            <button 
+                                className="change-photo-btn-ai"
+                                disabled={!userPhoto || isLoading}
+                                onClick={() => document.getElementById('photo-upload-ai').click()}
+                            >
+                                Изменить фото
+                            </button>
+                            
+                            <button 
+                                className="AI-btn" 
+                                disabled={!userPhoto || isLoading}
+                                onClick={handleAnalyze}
+                            >
+                                {isLoading ? 'Анализ...' : 'Узнайте цветотип бесплатно!'}
+                            </button>
+                        </div>
+                    
+                    </section>
+                </div>
+                {isLoading && (
+                    <div className="result-column">
+                    
+                        <div className="analyzing-container">
+                            <div className="spinner"></div>
+                            <p>Анализируем...</p>
+                        </div>
                     </div>
-                
-                </section>
-                {result && isLoggedIn && (
+                )}
+                {result && isLoggedIn && !isLoading && (
+                    <div className="result-column">
                         <div className="result-container">
                             <div className="result-title">
                                 <h2>РЕЗУЛЬТАТ АНАЛИЗА</h2>
@@ -252,6 +291,7 @@ const AIPage = () => {
                             </div>
                             
                         </div>
+                    </div>
                 )}
             </section>
             {showLoginModal && (

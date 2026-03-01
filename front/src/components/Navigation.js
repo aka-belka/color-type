@@ -4,6 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import './Navigation.css';
 import {  useTheme } from '../App.js';
 
+import sun from '../assets/icons/солнце.png';
+import moon from '../assets/icons/луна.png';
+
 const Navigation = () => {
   const location = useLocation();
   const { isLoggedIn, isAdmin } = useAuth();
@@ -46,10 +49,40 @@ const Navigation = () => {
 
         <li className="theme-toggle-item">
           <button 
-            onClick={toggleTheme} 
             className={`theme-toggle-btn ${themeMode === 'dark' ? 'active' : ''}`}
-            aria-label="Переключить тему"
+            onClick={toggleTheme}
           >
+            {themeMode === 'light' && (
+              <span style={{
+                position: 'absolute',
+                top: '12px',
+                left: '4px',
+                transform: 'translateY(-50%)',
+                width: '15px',
+                height: '15px',
+                backgroundImage: `url(${sun})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                zIndex: 10
+              }} />
+            )}
+            
+            {themeMode === 'dark' && (
+              <span style={{
+                position: 'absolute',
+                top: '50%',
+                right: '0px',
+                transform: 'translateY(-50%)',
+                width: '15px',
+                height: '15px',
+                backgroundImage: `url(${moon})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                zIndex: 10
+              }} />
+            )}
+            
+            <span className={`slider ${themeMode === 'dark' ? 'active' : ''}`} />
           </button>
         </li>
 

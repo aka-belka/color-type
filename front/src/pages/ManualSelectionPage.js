@@ -12,16 +12,58 @@ const ManualSelectionPage = () => {
   const navigate = useNavigate();
   const { themeMode } = useTheme();
   
-  const [selectedColor, setSelectedColor] = useState('#cfae44');
-  const [activeColorIndex, setActiveColorIndex] = useState(0);
-  const [customPalette, setCustomPalette] = useState(['#cfae44', '#FF4757', '#2ED573', '#FFC312', '#AA80F9']);
-  const [hue, setHue] = useState(46);
-  const [saturation, setSaturation] = useState(59);
-  const [lightness, setLightness] = useState(54);
+  const [selectedColor, setSelectedColor] = useState(() => {
+    return localStorage.getItem('manual_selectedColor') || '#cfae44';
+  });
+
+  const [activeColorIndex, setActiveColorIndex] = useState(() => {
+    const saved = localStorage.getItem('manual_activeIndex');
+    return saved ? parseInt(saved) : 0;
+  });
+
+  const [customPalette, setCustomPalette] = useState(() => {
+    const saved = localStorage.getItem('manual_customPalette');
+    try {
+      return saved ? JSON.parse(saved) : ['#cfae44', '#FF4757', '#2ED573', '#FFC312', '#AA80F9'];
+    } catch {
+      return ['#cfae44', '#FF4757', '#2ED573', '#FFC312', '#AA80F9'];
+    }
+  });
+
+  const [hue, setHue] = useState(() => {
+    const saved = localStorage.getItem('manual_hue');
+    return saved ? parseInt(saved) : 46;
+  });
+
+  const [saturation, setSaturation] = useState(() => {
+    const saved = localStorage.getItem('manual_saturation');
+    return saved ? parseInt(saved) : 59;
+  });
+
+  const [lightness, setLightness] = useState(() => {
+    const saved = localStorage.getItem('manual_lightness');
+    return saved ? parseInt(saved) : 54;
+  });
+
+  const [userPhoto, setUserPhoto] = useState(() => {
+    return localStorage.getItem('manual_currentPhoto') || null;
+  });
+
   const [savedPalettes, setSavedPalettes] = useState([]);
   const [paletteName, setPaletteName] = useState('');
-  const [userPhoto, setUserPhoto] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [paletteToDelete, setPaletteToDelete] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem('manual_selectedColor', selectedColor);
+    localStorage.setItem('manual_customPalette', JSON.stringify(customPalette));
+    localStorage.setItem('manual_activeIndex', activeColorIndex);
+    localStorage.setItem('manual_hue', hue);
+    localStorage.setItem('manual_saturation', saturation);
+    localStorage.setItem('manual_lightness', lightness);
+  }, [selectedColor, customPalette, activeColorIndex, hue, saturation, lightness]);
 
   useEffect(() => {
     if (isLoggedIn && user) {
@@ -36,6 +78,21 @@ const ManualSelectionPage = () => {
     setSavedPalettes([]);
   }
   }, [isLoggedIn, user]);
+
+  useEffect(() => {
+    const editPalette = localStorage.getItem('editPalette');
+    if (editPalette) {
+        try {
+            const palette = JSON.parse(editPalette);
+            setCustomPalette(palette.colors);
+            setSelectedColor(palette.colors[0]);
+            setActiveColorIndex(0);
+            localStorage.removeItem('editPalette'); 
+        } catch (e) {
+            console.error('Ошибка загрузки палитры:', e);
+        }
+    }
+  }, []); 
 
   const updateColorFromHSL = () => {
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
@@ -125,7 +182,9 @@ const ManualSelectionPage = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUserPhoto(reader.result);
+        const photoData = reader.result;
+        setUserPhoto(photoData);
+        localStorage.setItem('manual_currentPhoto', photoData);
       };
       reader.readAsDataURL(file);
     }
@@ -133,6 +192,7 @@ const ManualSelectionPage = () => {
 
   const handleSavePalette = () => {
     if (!isLoggedIn) {
+      localStorage.setItem('redirectAfterLogin', '/manual');
       setShowLoginModal(true);
       return;
     }
@@ -164,14 +224,28 @@ const ManualSelectionPage = () => {
 
   const handleDeletePalette = (paletteId, e) => {
     e.stopPropagation(); 
-    
-    const updatedPalettes = savedPalettes.filter(p => p.id !== paletteId);
-    setSavedPalettes(updatedPalettes);
-    
-    if (user) {
-      const compressed = compress(updatedPalettes);
-      localStorage.setItem(`palettes_${user.id}`, compressed);
+    setPaletteToDelete(paletteId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (paletteToDelete) {
+      const updatedPalettes = savedPalettes.filter(p => p.id !== paletteToDelete);
+      setSavedPalettes(updatedPalettes);
+      
+      if (user) {
+        const compressed = compress(updatedPalettes);
+        localStorage.setItem(`palettes_${user.id}`, compressed);
+      }
+      
+      setShowDeleteModal(false);
+      setPaletteToDelete(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setPaletteToDelete(null);
   };
 
   return (
@@ -190,8 +264,7 @@ const ManualSelectionPage = () => {
               <div 
                 className="color-circle1"
                 style={{ 
-                  backgroundColor: selectedColor,
-                  boxShadow: `0 10px 30px ${selectedColor}`
+                  backgroundColor: selectedColor
                 }}
               >
                 {userPhoto ? (
@@ -377,11 +450,13 @@ const ManualSelectionPage = () => {
                       <button 
                         className="use-saved-btn"
                         onClick={() => handleUsePalette(palette)}
+                        style={{ background: "none" }} 
                       >
                         Использовать
                       </button>
                       <button 
                         className="delete-palette-btn"
+                        style={{ background: "none" }} 
                         onClick={(e) => handleDeletePalette(palette.id, e)}
                       >
                         Удалить
@@ -403,6 +478,24 @@ const ManualSelectionPage = () => {
             <button className="modal-login-btn" onClick={() => navigate('/login')}>
               Войти
             </button>
+          </div>
+        </div>
+      )}
+
+      {showDeleteModal && (
+        <div className="modal-overlay" onClick={cancelDelete} >
+          <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()} style={{background: "var(--bg-color10)"}}>
+            <button className="modal-close" onClick={cancelDelete}>✕</button>
+            <h3>Подтверждение удаления</h3>
+            <p style={{color:"black"}}>Вы уверены, что хотите удалить эту палитру?</p>
+            <div className="delete-modal-actions">
+              <button className="delete-palette-btn del" onClick={confirmDelete}>
+                Удалить
+              </button>
+              <button className="delete-cancel-btn" onClick={cancelDelete}>
+                Отмена
+              </button>
+            </div>
           </div>
         </div>
       )}

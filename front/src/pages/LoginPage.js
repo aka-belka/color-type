@@ -83,7 +83,9 @@ const LoginPage = () => {
       const success = login(email, password);
       
       if (success) {
-        navigate('/profile');
+        const redirectTo = localStorage.getItem('redirectAfterLogin');
+        localStorage.removeItem('redirectAfterLogin'); // ОЧИЩАЕМ
+        navigate(redirectTo || '/profile');
       } else {
         setErrors({ form: 'Неверный email или пароль' });
       }
@@ -96,7 +98,9 @@ const LoginPage = () => {
       }
       
       register(email, password, firstName, lastName, phone, gender);
-      navigate('/profile');
+      const redirectTo = localStorage.getItem('redirectAfterLogin');
+      localStorage.removeItem('redirectAfterLogin');
+      navigate(redirectTo || '/profile');
     }
   };
 

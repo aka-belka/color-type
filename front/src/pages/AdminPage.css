@@ -2,6 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
+  padding-top: 15px;
 }
 
 .admin-page h1 {
@@ -162,8 +163,12 @@
   border-radius: 16px;
   text-align: center;
   border: 2px dashed #0b400a;
+  transition: all 0.2s;
 }
-
+.stat-card:hover{
+  transform: translateY(-2px);
+  background-color: var(--bg-color6);
+}
 .stat-value {
   font-size: 36px;
   font-weight: 700;

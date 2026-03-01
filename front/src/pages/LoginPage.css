@@ -45,7 +45,9 @@
   font-size: 16px;
   transition: all 0.3s;
 }
-
+.form-group input:hover{
+  background: rgba(235, 235, 235, 0.9);
+}
 .form-group input:focus {
   outline: none;
   border-color: #0b400a;
@@ -89,8 +91,10 @@
   transform: translateY(-2px);
 }
 .password input{
-    background-color: #bdb08133;
-    
+    background-color: #bdb08133;    
+}
+.password input:hover{
+    background-color: var(--bg-color7)    
 }
 input[type="radio"] {
   accent-color: #0b400a; 
@@ -149,4 +153,9 @@ input[type="radio"] {
   width: 150px;
   height: auto;
   pointer-events: none; 
+}
+
+input::placeholder {
+  color: #999; /* Серый цвет */
+  opacity: 1;  
 }

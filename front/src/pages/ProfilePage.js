@@ -14,6 +14,12 @@ const ProfilePage = () => {
     const [selectedResult, setSelectedResult] = useState(null);
     const { themeMode } = useTheme();
 
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
+    const [deleteType, setDeleteType] = useState(null);
+
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+
     useEffect(() => {
         if (user) {
             
@@ -37,27 +43,69 @@ const ProfilePage = () => {
     };
 
     const handleDeleteResult = (resultId, e) => {
-        e.stopPropagation(); 
-        
-        const updatedResults = savedResults.filter(r => r.id !== resultId);
-        setSavedResults(updatedResults);
-        
-        if (user) {
-        const compressed = compress(updatedResults);
-        localStorage.setItem(`results_${user.id}`, compressed);
-        }
+        e.stopPropagation();
+        setItemToDelete(resultId);
+        setDeleteType('result');
+        setShowDeleteModal(true);
     };
 
-    const handleLogout = () => {
+    const handleDeletePalette = (paletteId, e) => {
+        e.stopPropagation();
+        setItemToDelete(paletteId);
+        setDeleteType('palette');
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = () => {
+        if (deleteType === 'result') {
+            const updatedResults = savedResults.filter(r => r.id !== itemToDelete);
+            setSavedResults(updatedResults);
+            if (user) {
+                const compressed = compress(updatedResults);
+                localStorage.setItem(`results_${user.id}`, compressed);
+            }
+        } else if (deleteType === 'palette') {
+            const updatedPalettes = savedPalettes.filter(p => p.id !== itemToDelete);
+            setSavedPalettes(updatedPalettes);
+            if (user) {
+                const compressed = compress(updatedPalettes);
+                localStorage.setItem(`palettes_${user.id}`, compressed);
+            }
+        }
+        
+        setShowDeleteModal(false);
+        setItemToDelete(null);
+        setDeleteType(null);
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteModal(false);
+        setItemToDelete(null);
+        setDeleteType(null);
+    };
+
+    const handleLogoutClick = () => {
+        setShowLogoutModal(true);
+    };
+
+    const confirmLogout = () => {
         logout();
         navigate('/');
+        setShowLogoutModal(false);
+    };
+
+    const cancelLogout = () => {
+        setShowLogoutModal(false);
     };
 
     if (!user) {
         navigate('/login');
         return null;
     }
-
+    const handleEditPalette = (palette) => {
+        localStorage.setItem('editPalette', JSON.stringify(palette));
+        navigate('/manual');
+    };
     return (
         <div className={`profile-page ${themeMode}-theme`}>
             <img src={BackgroundImage13} className="background-foto13"/>
@@ -134,6 +182,24 @@ const ProfilePage = () => {
                                 />
                                 ))}
                             </div>
+                            <div className="palette-actions">
+                                <button 
+                                    className="edit-palette-btn"
+                                    onClick={() => handleEditPalette(palette)}
+                                    title="Редактировать"
+                                    style={{ background: "none" }} 
+                                >
+                                    Редактировать
+                                </button>
+                                <button 
+                                    className="delete-palette-btn"
+                                    onClick={(e) => handleDeletePalette(palette.id, e)}
+                                    title="Удалить"
+                                    style={{ background: "none" }} 
+                                >
+                                    Удалить
+                                </button>
+                            </div>
                         </div>
                     ))}
                     </div>
@@ -149,7 +215,7 @@ const ProfilePage = () => {
                         Панель администратора
                     </button>
                     )}
-                    <button onClick={handleLogout} className="logout-btn">
+                    <button onClick={handleLogoutClick} className="logout-btn">
                     Выйти
                     </button>
                 </div>
@@ -193,6 +259,46 @@ const ProfilePage = () => {
                                 </ul>
                             </div>
                         )}
+                    </div>
+                </div>
+            )}
+            {showDeleteModal && (
+                <div className="modal-overlay" onClick={cancelDelete}>
+                    <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()} style={{background: "var(--bg-color10)"}}>
+                        <button className="modal-close" onClick={cancelDelete}>✕</button>
+                        <h3>Подтверждение удаления</h3>
+                        <p style={{color:"black"}}>
+                            {deleteType === 'result' 
+                                ? 'Вы уверены, что хотите удалить этот результат анализа?'
+                                : 'Вы уверены, что хотите удалить эту палитру?'
+                            }
+                        </p>
+                        <div className="delete-modal-actions">
+                            <button className="delete-palette-btn" onClick={confirmDelete} style={{background: "none"}}>
+                                Удалить
+                            </button>
+                            <button className="delete-cancel-btn" onClick={cancelDelete}>
+                                Отмена
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showLogoutModal && (
+                <div className="modal-overlay" onClick={cancelLogout}>
+                    <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()} style={{background: "var(--bg-color10)"}}>
+                        <button className="modal-close" onClick={cancelLogout}>✕</button>
+                        <h3>Подтверждение выхода</h3>
+                        <p style={{color:"black"}}>Вы уверены, что хотите выйти из аккаунта?</p>
+                        <div className="delete-modal-actions">
+                            <button className="delete-palette-btn" onClick={confirmLogout} style={{background: "none"}}>
+                                Выйти
+                            </button>
+                            <button className="delete-cancel-btn" onClick={cancelLogout}>
+                                Отмена
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

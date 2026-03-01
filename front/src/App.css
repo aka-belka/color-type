@@ -6,6 +6,13 @@
   --bg-color2: white;
   --bg-color3: #f8f9fa;
   --bg-color4: white;
+  --bg-color5: rgba(235, 235, 235, 0.9);
+  --bg-color6:rgba(235, 235, 235, 0.9);
+  --bg-color7:#70684d33;
+  --bg-color8:rgba(235, 234, 234, 0.9);
+  --bg-color9: white;
+  --bg-color10: white;
+  --bg-color11: #0b400a;
 
   --text-color: black;
   --text-color-pr: black;
@@ -22,8 +29,11 @@
   --btn-color: #ff4757;
   --error: #bd818137;
   --error1:#ff4757;
+  --error2: #ff3d3d;
 
   --opacity: 0.5;
+
+  --cancel: #3b3b3b;
 }
 
 :root.dark-theme {
@@ -34,6 +44,13 @@
   --bg-color2: #79c178;
   --bg-color3: #6a9a69;
   --bg-color4: #0b1c0b;
+  --bg-color5: #3e673e;
+  --bg-color6: #9edd9e;
+  --bg-color7:#4a443133;
+  --bg-color8: #508b507b;
+  --bg-color9:#264826;
+  --bg-color10: #9edd9e;
+  --bg-color11: #0b1c0b;
 
   --text-color: white;
   --text-color-pr: rgb(218, 211, 211);
@@ -50,13 +67,14 @@
   --btn-color: #a9111d;
   --error:#f3d3d3a7;
   --error1:#670c13;
+  --error2: #992121;
 
   --opacity: 1;
+
+  --cancel: #3b3b3b;
 
 }
 
 .App{
   background-color: var(--primary);
-  font-family: 'appetite';
-  src: url('assets/fonts/appetite.ttf') format('truetype');
 }

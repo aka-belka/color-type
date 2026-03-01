@@ -29,7 +29,7 @@ const HomePage = () => {
           
           <div className="selection-card">
             <Link to="/ai" className="card-btn2">
-              <a className="title-selection">Воспользоваться ИИ-генератором</a>
+              <a className="title-selection">Пройти анализ ИИ</a>
             </Link>
             <p>Позвольте ИИ-генератору проанализировать вашу внешность и дать рекомендации по цвету</p>
           </div>

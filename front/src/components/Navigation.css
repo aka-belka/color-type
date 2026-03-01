@@ -64,28 +64,34 @@
   height: 23px;
   background: #ccc;
   border-radius: 30px;
-  border: none;
+  border: 1px solid black;
   cursor: pointer;
   position: relative;
   transition: background 0.3s;
 }
 
-.theme-toggle-btn::after {
-  content: '';
+.theme-toggle-btn .slider {
   position: absolute;
-  top: 3px;
-  left: 2px;
-  width: 17px;
-  height: 17px;
+  top: -2px;
+  left: -2px;
+  width: 27px;
+  height: 27px;
   background: white;
   border-radius: 50%;
+  border: 1px solid black;
   transition: transform 0.3s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 5;
+}
+
+.theme-toggle-btn.active .slider {
+  transform: translateX(24px);
 }
 
 .theme-toggle-btn.active {
-  background: #cfae44;
+  background: #54471d;
 }
 
-.theme-toggle-btn.active::after {
-  transform: translateX(24px);
+.slider.active{
+  background: #c6b587;
 }

@@ -6,6 +6,24 @@ import {  useTheme } from '../App.js';
 import BackgroundImage32 from '../assets/background3.png';
 import BackgroundImage42 from '../assets/background4.png';
 
+import seasonIconSpring from '../assets/icons/цветок.png';
+import seasonIconSummer from '../assets/icons/солнце.png';
+import seasonIconAutumn from '../assets/icons/листья.png';
+import seasonIconWinter from '../assets/icons/снежинка.png';
+
+import { ReactComponent as ColorWheelIcon } from '../assets/icons/круг.svg';
+import { ReactComponent as Subton } from '../assets/icons/подтоны.svg';
+
+import { ReactComponent as SeasonIconSkin } from '../assets/icons/тело.svg';
+import { ReactComponent as SeasonIconEyes } from '../assets/icons/глаз.svg';
+import { ReactComponent as SeasonIconHair } from '../assets/icons/волосы.svg';
+import { ReactComponent as SeasonIconLips} from '../assets/icons/губы.svg';
+
+import { ReactComponent as SeasonIconSpring } from '../assets/icons/цветок.svg';
+import { ReactComponent as SeasonIconSummer } from '../assets/icons/солнце.svg';
+import { ReactComponent as SeasonIconAutumn } from '../assets/icons/листья.svg';
+import { ReactComponent as SeasonIconWinter} from '../assets/icons/снежинка.svg';
+
 const ColorTheoryPage = () => {
   const [activeSection, setActiveSection] = useState('intro');
   const { themeMode } = useTheme();
@@ -37,6 +55,15 @@ const ColorTheoryPage = () => {
     }
   };
 
+  const Icon = ({ name, className }) => {
+    const icons = {
+      intro: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      seasons: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 4L12 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 12L20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>`,
+      harmony: `<svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12L8 8L12 12L16 8L20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16L8 12L12 16L16 12L20 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+    };
+
+    return <span className={className} dangerouslySetInnerHTML={{ __html: icons[name] }} />;
+  };
   return (
     <div className={`theory-page ${themeMode}-theme`}>
       {themeMode === 'light' && <img src={BackgroundImage32} className="background-foto32"/>}
@@ -63,30 +90,35 @@ const ColorTheoryPage = () => {
             className={`nav-section-btn ${activeSection === 'intro' ? 'active' : ''}`}
             onClick={() => scrollToSection('intro')}
           >
+            <Icon name="intro" className="nav-icon" />
             Введение
           </button>
           <button 
             className={`nav-section-btn ${activeSection === 'color-wheel' ? 'active' : ''}`}
             onClick={() => scrollToSection('color-wheel')}
           >
+          <ColorWheelIcon className="nav-icon" />
             Цветовой круг
           </button>
           <button 
             className={`nav-section-btn ${activeSection === 'seasons' ? 'active' : ''}`}
             onClick={() => scrollToSection('seasons')}
           >
+          <Icon name="seasons" className="nav-icon" />
            4 сезона
           </button>
           <button 
             className={`nav-section-btn ${activeSection === 'subtones' ? 'active' : ''}`}
             onClick={() => scrollToSection('subtones')}
           >
+          <Subton className="nav-icon" />
             12 подтонов
           </button>
           <button 
             className={`nav-section-btn ${activeSection === 'harmony' ? 'active' : ''}`}
             onClick={() => scrollToSection('harmony')}
           >
+            <Icon name="harmony" className="nav-icon" />
             Цветовые гармонии
           </button>
         </div>
@@ -94,22 +126,26 @@ const ColorTheoryPage = () => {
 
       <section id="intro" className="theory-section intro-section">
         <div className="section-header">
-          <h2>Введение в теорию цвета</h2>
+          <h2> <Icon name="intro" className="nav-icon icons" />Введение в теорию цвета</h2>
         </div>
         
         <div className="intro-content">
           <div className="intro-text">
             <div className="theory-block">
-              <p>Теория цвета — это система знаний о том, как цвета взаимодействуют между собой и как они влияют на наше восприятие. Еще Аристотель пытался систематизировать цвета, выделяя 7 основных: белый, желтый, красный, фиолетовый, зеленый, синий и черный. Но настоящую революцию совершил Исаак Ньютон в 1676 году, когда разложил солнечный свет через призму и получил спектр из 7 цветов.</p>
-              <p>В 1810 году Иоганн Вольфганг Гёте опубликовал "Учение о цвете", где впервые описал психологическое воздействие цвета. А в 1961 году Йоханнес Иттен создал свой знаменитый цветовой круг, который до сих пор является основой колористики.</p>
+              <div className="theory-block3">
+                <p><strong>Теория цвета</strong> — это система знаний о том, как цвета взаимодействуют между собой и как они влияют на наше восприятие. Еще <strong>Аристотель</strong> пытался систематизировать цвета, выделяя <strong>7 основных</strong>: белый, желтый, красный, фиолетовый, зеленый, синий и черный. Но настоящую революцию совершил <strong>Исаак Ньютон</strong> в 1676 году, когда разложил солнечный свет через призму и получил спектр из 7 цветов.</p>
+              </div>
+              <div className="theory-block2">
+                <p>В 1810 году <strong>Иоганн Вольфганг Гёте</strong> опубликовал "Учение о цвете", где впервые описал психологическое воздействие цвета. А в 1961 году <strong>Йоханнес Иттен</strong> создал свой знаменитый <strong>цветовой круг</strong>, который до сих пор является основой колористики.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="color-wheel" className=" color-wheel-section">
-        <div className="section-header">
-          <h2>Цветовой круг Иттена</h2>
+      <section id="color-wheel" className="theory-section color-wheel-section">
+        <div className="section-header sh-wheel">
+          <h2> <ColorWheelIcon className="nav-icon icons" />Цветовой круг Иттена</h2>
         </div>
         <div className="color-wheel-content">
           <div className="color-wheel-main">
@@ -117,16 +153,18 @@ const ColorTheoryPage = () => {
             <div >
                 <img src={colorWheelImage} alt="Цветовой круг Иттена" className="color-wheel-container"/>
                 <div className="theory-block1">
-                  <p>Цветовой круг Иттена представляет собой схему из 12 цветов (первичных, вторичных и третичных), которая помогает находить гармоничные цветовые сочетания. Иттен считал, что восприятие цвета работает через контраст.</p>
+                  <p>Цветовой круг Иттена представляет собой схему из <strong>12 цветов</strong> (первичных, вторичных и третичных), которая помогает находить гармоничные цветовые сочетания. Иттен считал, что восприятие цвета работает через контраст.</p>
                 </div>
             </div>
 
             <div className="color-theory-detailed">
               <div className="color-category">
-                <p><h3> Первичные цвета</h3>Базовые цвета, которые нельзя получить смешиванием. Все остальные цвета создаются из них.</p>
+                <div className="col-cat">
+                  <p><h3> Первичные цвета</h3>Базовые цвета, которые нельзя получить смешиванием. Все остальные цвета создаются из них.</p>
+                </div>
                 <div className="color-cards1">
-                  <div className="color-card">
-                    <span className="color-circle" style={{background: '#FF4757'}}></span>
+                  <div className="color-card cc">
+                    <span className="color-circle " style={{background: '#FF4757'}}></span>
                     <span className="color-name">Красный</span>
                   </div>
                   
@@ -196,29 +234,41 @@ const ColorTheoryPage = () => {
 
       <section id="seasons" className="theory-section seasons-section">
         <div className="section-header">
-          <h2>4 сезона: теория цветотипов</h2>
+          <h2><Icon name="seasons" className="nav-icon icons" />4 Сезона: Теория Цветотипов</h2>
         </div>
 
-        <p className="theory-subtitle">
-          Теория цветотипов делит людей на 4 группы по аналогии с временами года. 
-          Эта система была разработана в 1970-х годах и до сих пор является основой 
+        <p className="theory-subtitle ts-p">
+          Теория цветотипов делит людей на <strong>4 группы</strong> по аналогии с временами года. 
+          Эта система была разработана в <strong>1970-х</strong> годах и до сих пор является основой 
           для подбора персональной цветовой палитры.
         </p>
 
         <div className="seasons-grid-full">
           <div className="season-card-full spring-card">
             <div className="season-header" style={{background: '#FFDAB9'}}>
-              <h3>Весна</h3>
-              <div className="season-tag">Теплый • Светлый • Чистый</div>
+              <h3><img src={seasonIconSpring} className="season-icon-s"/>Весна</h3>
+              <div className="season-tag">Теплый • Светлый</div>
             </div>
             <div className="season-body">
               <div className="season-physics">
                 <h4> Характеристика цветотипа</h4>
                 <ul>
-                  <li><strong>Кожа:</strong> Теплого персикового или слоновой кости оттенка. Легко загорает, приобретая золотистый оттенок. Возможны веснушки золотистого цвета.</li>
-                  <li><strong>Глаза:</strong> Голубые, бирюзовые, зеленые, янтарные, ореховые. Часто с золотистыми крапинками.</li>
-                  <li><strong>Волосы:</strong> Золотисто-русые, медовые, пшеничные, льняные, светло-каштановые с рыжиной.</li>
-                  <li><strong>Губы:</strong> Теплого розового или кораллового оттенка.</li>
+                  <li>
+                    <SeasonIconSkin className="season-icon"/>
+                    <strong>Кожа:</strong> Теплого персикового или слоновой кости оттенка. Легко загорает, приобретая золотистый оттенок. Возможны веснушки.
+                  </li>
+                  <li>
+                    <SeasonIconEyes className="feature-icon"/>
+                    <strong>Глаза:</strong> Голубые, бирюзовые, зеленые, янтарные, ореховые.
+                  </li>
+                  <li>
+                    <SeasonIconHair className="hair-icon"/>
+                    <strong>Волосы:</strong> Золотисто-русые, медовые, пшеничные, льняные, светло-каштановые с рыжиной.
+                  </li>
+                  <li>
+                    <SeasonIconLips className="feature-icon"/>
+                    <strong>Губы:</strong> Розового или кораллового оттенка.
+                  </li>
                 </ul>
               </div>
 
@@ -232,6 +282,8 @@ const ColorTheoryPage = () => {
                     <div className="palette-color" style={{background: '#FFB347'}}>
                      
                     </div>
+                  </div>
+                  <div className="palette-row">
                     <div className="palette-color" style={{background: '#FF8C69'}}>
                       
                     </div>
@@ -246,6 +298,8 @@ const ColorTheoryPage = () => {
                     <div className="palette-color" style={{background: '#DCEDC1'}}>
                       
                     </div>
+                  </div>
+                  <div className="palette-row">
                     <div className="palette-color" style={{background: '#FFD3B6'}}>
                       
                     </div>
@@ -261,17 +315,29 @@ const ColorTheoryPage = () => {
 
           <div className="season-card-full summer-card">
             <div className="season-header" style={{background: '#D8BFD8'}}>
-              <h3>Лето</h3>
-              <div className="season-tag">Холодный • Мягкий • Приглушенный</div>
+              <h3><img src={seasonIconSummer} className="season-icon-s" style={{width: 28,height:28}}/>Лето</h3>
+              <div className="season-tag">Холодный • Мягкий</div>
             </div>
             <div className="season-body">
               <div className="season-physics">
                 <h4>Характеристика цветотипа</h4>
                 <ul>
-                  <li><strong>Кожа:</strong> Светлая с розоватым или оливковым отливом. Плохо загорает, склонна к покраснениям.</li>
-                  <li><strong>Глаза:</strong> Серые, серо-голубые, серо-зеленые, ореховые. Без яркого контраста.</li>
-                  <li><strong>Волосы:</strong> Пепельно-русые, холодный блонд, пепельно-каштановые. С пепельным оттенком без рыжины.</li>
-                  <li><strong>Губы:</strong> Холодного розового оттенка.</li>
+                  <li>
+                    <SeasonIconSkin className="season-icon"/>
+                    <strong>Кожа:</strong> Светлая с розоватым или оливковым отливом. Плохо загорает, склонна к покраснениям.
+                  </li>
+                  <li>
+                    <SeasonIconEyes className="feature-icon"/>
+                    <strong>Глаза:</strong> Серые, серо-голубые, серо-зеленые, ореховые. Без яркого контраста.
+                  </li>
+                  <li>
+                    <SeasonIconHair className="hair-icon"/>
+                    <strong>Волосы:</strong> Пепельно-русые, холодный блонд, пепельно-каштановые. С пепельным оттенком без рыжины.
+                  </li>
+                  <li>
+                    <SeasonIconLips className="feature-icon"/>
+                    <strong>Губы:</strong> Холодного розового оттенка.
+                  </li>
                 </ul>
               </div>
 
@@ -283,6 +349,8 @@ const ColorTheoryPage = () => {
                     </div>
                     <div className="palette-color" style={{background: '#B0E0E6'}}>
                     </div>
+                  </div>
+                  <div className="palette-row">
                     <div className="palette-color" style={{background: '#D8BFD8'}}>
                     </div>
                     <div className="palette-color" style={{background: '#AFEEEE'}}>
@@ -293,6 +361,8 @@ const ColorTheoryPage = () => {
                     </div>
                     <div className="palette-color" style={{background: '#E0B0FF'}}>
                     </div>
+                  </div>
+                  <div className="palette-row">
                     <div className="palette-color" style={{background: '#C0C0C0'}}>
                     </div>
                     <div className="palette-color" style={{background: '#F5F5DC'}}>
@@ -305,17 +375,29 @@ const ColorTheoryPage = () => {
 
           <div className="season-card-full autumn-card">
             <div className="season-header" style={{background: '#CD853F'}}>
-              <h3>Осень</h3>
-              <div className="season-tag">Теплый • Насыщенный • Глубокий</div>
+              <h3><img src={seasonIconAutumn} className="season-icon-s" style={{width: 30,height:30}}/>Осень</h3>
+              <div className="season-tag">Теплый • Насыщенный</div>
             </div>
             <div className="season-body">
               <div className="season-physics">
                 <h4> Характеристика цветотипа</h4>
                 <ul>
-                  <li><strong>Кожа:</strong> Персиковая, бронзовая, золотисто-бежевая. Много веснушек рыжевато-коричневого цвета.</li>
-                  <li><strong>Глаза:</strong> Карие, зеленые, янтарные, ореховые. Часто с золотистыми лучиками.</li>
-                  <li><strong>Волосы:</strong> Рыжие, медные, каштановые с золотым отливом, бронзовые.</li>
-                  <li><strong>Губы:</strong> Теплого кораллового или персикового оттенка.</li>
+                  <li>
+                    <SeasonIconSkin className="season-icon"/>
+                    <strong>Кожа:</strong> Персиковая, бронзовая, золотисто-бежевая. Много рыжевато-коричневых веснушек.
+                  </li>
+                  <li>
+                    <SeasonIconEyes className="feature-icon"/>
+                    <strong>Глаза:</strong> Карие, зеленые, янтарные, ореховые. Часто с золотистыми лучиками.
+                  </li>
+                  <li>
+                    <SeasonIconHair className="hair-icon"/>
+                    <strong>Волосы:</strong> Рыжие, медные, каштановые с золотым отливом, бронзовые.
+                  </li>
+                  <li>
+                    <SeasonIconLips className="feature-icon"/>
+                    <strong>Губы:</strong> Теплого кораллового или персикового оттенка.
+                  </li>
                 </ul>
               </div>
 
@@ -327,6 +409,8 @@ const ColorTheoryPage = () => {
                     </div>
                     <div className="palette-color" style={{background: '#CD853F'}}>
                     </div>
+                  </div>
+                  <div className="palette-row">
                     <div className="palette-color" style={{background: '#8B4513'}}>
                     </div>
                     <div className="palette-color" style={{background: '#D2691E'}}>
@@ -337,6 +421,8 @@ const ColorTheoryPage = () => {
                     </div>
                     <div className="palette-color" style={{background: '#808000'}}>
                     </div>
+                  </div>
+                  <div className="palette-row">
                     <div className="palette-color" style={{background: '#FF8C00'}}>
                     </div>
                     <div className="palette-color" style={{background: '#B8860B'}}>
@@ -349,17 +435,30 @@ const ColorTheoryPage = () => {
 
           <div className="season-card-full winter-card">
             <div className="season-header" style={{background: '#B0C4DE'}}>
-              <h3>Зима</h3>
-              <div className="season-tag">Холодный • Яркий • Контрастный</div>
+              
+              <h3><img src={seasonIconWinter} className="season-icon-s" style={{width: 28,height:28}}/>Зима</h3>
+              <div className="season-tag">Холодный • Контрастный</div>
             </div>
             <div className="season-body">
               <div className="season-physics">
                 <h4>Характеристика цветотипа</h4>
                 <ul>
-                  <li><strong>Кожа:</strong> Фарфорово-белая с голубоватым отливом, оливковая. Практически не загорает.</li>
-                  <li><strong>Глаза:</strong> Темно-карие, синие, фиолетовые, серо-голубые. Очень яркие.</li>
-                  <li><strong>Волосы:</strong> Черные, темно-каштановые, платиновый блонд. </li>
-                  <li><strong>Губы:</strong> Холодного розового или красного оттенка.</li>
+                  <li>
+                    <SeasonIconSkin className="season-icon"/>
+                    <strong>Кожа:</strong> Фарфорово-белая с голубоватым отливом, оливковая. Практически не загорает.
+                  </li>
+                  <li>
+                    <SeasonIconEyes className="feature-icon"/>
+                    <strong>Глаза:</strong> Темно-карие, синие, фиолетовые, серо-голубые. Очень яркие.
+                  </li>
+                  <li>
+                    <SeasonIconHair className="hair-icon"/>
+                    <strong>Волосы:</strong> Черные, темно-каштановые, платиновый блонд.
+                  </li>
+                  <li>
+                    <SeasonIconLips className="feature-icon"/>
+                    <strong>Губы:</strong> Холодного розового или красного оттенка.
+                  </li>
                 </ul>
               </div>
 
@@ -371,6 +470,8 @@ const ColorTheoryPage = () => {
                     </div>
                     <div className="palette-color" style={{background: '#0000FF'}}>
                     </div>
+                  </div>
+                  <div className="palette-row">
                     <div className="palette-color" style={{background: '#FFFFFF'}}>
                     </div>
                     <div className="palette-color" style={{background: '#000000'}}>
@@ -381,6 +482,8 @@ const ColorTheoryPage = () => {
                     </div>
                     <div className="palette-color" style={{background: '#9370DB'}}>
                     </div>
+                  </div>
+                  <div className="palette-row">
                     <div className="palette-color" style={{background: '#00CED1'}}>
                     </div>
                     <div className="palette-color" style={{background: '#C0C0C0'}}>
@@ -391,48 +494,24 @@ const ColorTheoryPage = () => {
             </div>
           </div>
         </div>
-
-        <div className="seasons-conclusion">
-          <h4>Как определить свой цветотип?</h4>
-          <div className="test-methods">
-            <div className="test-method">
-              <div className="method-content">
-                <h5>Тест с венами</h5>
-                <p>Посмотрите на вены на запястье при дневном свете. Если они зеленоватые — теплый тип (Весна/Осень). Если голубоватые — холодный (Лето/Зима).</p>
-              </div>
-            </div>
-            <div className="test-method">
-              <div className="method-content">
-                <h5>Тест с белой бумагой</h5>
-                <p>Поднесите к лицу чистый белый лист. Если кожа кажется желтоватой — теплый тип, если розоватой — холодный.</p>
-              </div>
-            </div>
-            <div className="test-method">
-              <div className="method-content">
-                <h5>Тест с золотом и серебром</h5>
-                <p>Примерьте золотое и серебряное украшение. С золотом лицо светится — теплый тип. С серебром — холодный.</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       <section id="subtones" className="theory-section subtones-section">
         <div className="section-header">
-          <h2> 12 подтонов: детальная система цветотипов</h2>
+          <h2><Subton className="nav-icon icons" />12 подтонов: детальная система цветотипов</h2>
         </div>
-        <p className="theory-subtitle">
-            Каждый из 4 сезонов делится на 3 подтипа. Всего существует 12 цветотипов, 
+        <p className="theory-subtitle ts-sub">
+            Каждый из 4 сезонов делится на 3 подтипа. Всего существует <strong>12 цветотипов</strong>, 
             что позволяет определить вашу палитру с максимальной точностью. 
-            Система 12 подтонов учитывает три параметра: температуру (теплый/холодный), 
+            Система 12 подтонов учитывает <strong>три параметра</strong>: температуру (теплый/холодный), 
             яркость (чистый/мягкий) и глубину (светлый/темный).
         </p>
 
         <div className="subtones-matrix">
           <div className="subtype-block">
-            <h3 className="subtype-block-title spring-title"> ВЕСНА</h3>
+            <h3 className="subtype-block-title spring-title"> <SeasonIconSpring />ВЕСНА</h3>
             <div className="subtype-grid">
-              <div className="subtype-detailed">
+              <div className="subtype-detailed bright">
                 <div className="subtype-header" style={{background: '#FFE4B5'}}>
                   <h4>Яркая Весна</h4>
                 </div>
@@ -442,7 +521,7 @@ const ColorTheoryPage = () => {
                   <p><strong>Знаменитости:</strong> Николь Кидман, Кира Найтли</p>
                 </div>
               </div>
-              <div className="subtype-detailed">
+              <div className="subtype-detailed naturale">
                 <div className="subtype-header" style={{background: '#FFDAB9'}}>
                   <h4>Натуральная Весна</h4>
                 </div>
@@ -465,7 +544,7 @@ const ColorTheoryPage = () => {
             </div>
           </div>
           <div className="subtype-block">
-            <h3 className="subtype-block-title summer-title">ЛЕТО</h3>
+            <h3 className="subtype-block-title summer-title"><SeasonIconSummer style={{marginRight: 5}}/>ЛЕТО</h3>
             <div className="subtype-grid">
               <div className="subtype-detailed">
                 <div className="subtype-header" style={{background: '#E6E6FA'}}>
@@ -500,7 +579,7 @@ const ColorTheoryPage = () => {
             </div>
           </div>
           <div className="subtype-block">
-            <h3 className="subtype-block-title autumn-title">ОСЕНЬ </h3>
+            <h3 className="subtype-block-title autumn-title"><SeasonIconAutumn className="season-icon-s"/>ОСЕНЬ </h3>
             <div className="subtype-grid">
               <div className="subtype-detailed">
                 <div className="subtype-header" style={{background: '#DEB887'}}>
@@ -536,7 +615,7 @@ const ColorTheoryPage = () => {
           </div>
 
           <div className="subtype-block">
-            <h3 className="subtype-block-title winter-title">ЗИМА</h3>
+            <h3 className="subtype-block-title winter-title"><SeasonIconWinter className="season-icon-s"/>ЗИМА</h3>
             <div className="subtype-grid">
               <div className="subtype-detailed">
                 <div className="subtype-header" style={{background: '#4682B4'}}>
@@ -575,17 +654,20 @@ const ColorTheoryPage = () => {
 
       <section id="harmony" className="theory-section harmony-section">
         <div className="section-header">
-          <h2>Цветовые гармонии и сочетания</h2>
+          <h2><Icon name="harmony" className="nav-icon icons"/>Цветовые гармонии и сочетания</h2>
         </div>
-        <p className="theory-subtitle">
-            Цветовая гармония — это теория сочетания цветов для создания приятного визуального восприятия. 
-            Существуют математически выверенные схемы, которые гарантированно работают.
-        </p>
-        <p className="theory-subtitle">Универсальное <strong>правило 60-30-10</strong> помогает распределять цвета в образе: 60% занимает доминирующий цвет (фон), 
-              30% — дополнительный и 10% — яркие акценты. Это правило работает в одежде, интерьере, графическом дизайне — везде, где нужно 
-              создать сбалансированную цветовую композицию.
-        </p >
-
+        <div className="har1">
+          <p className="theory-subtitle ">
+              <strong>Цветовая гармония</strong> — это теория сочетания цветов для создания приятного визуального восприятия. 
+              Существуют математически выверенные схемы, которые гарантированно работают.
+          </p>
+        </div>
+        <div className="har2">
+          <p className="theory-subtitle">Универсальное <strong>правило 60-30-10</strong> помогает распределять цвета в образе: 60% занимает доминирующий цвет (фон), 
+                30% — дополнительный и 10% — яркие акценты. Это правило работает в одежде, интерьере, графическом дизайне — везде, где нужно 
+                создать сбалансированную цветовую композицию.
+          </p >
+        </div>
         <div className="harmony-schemes">
           <div className="harmony-scheme-card">
             <div className="scheme-visual monochrome-scheme">
@@ -596,11 +678,10 @@ const ColorTheoryPage = () => {
               <div className="scheme-bar" style={{background: '#A5C8E9'}}></div>
             </div>
             <h4>МОНОХРОМНАЯ ГАРМОНИЯ</h4>
-            <p className="scheme-desc">Один цвет в разных оттенках и тонах. Всегда выглядит элегантно, создает целостный образ. Идеально для минималистов.</p>
+            <p className="scheme-desc">Один цвет в разных оттенках и тонах. Всегда выглядит элегантно, создает целостный образ.</p>
             <div className="scheme-usage">
               <span className="usage-tag">базовый гардероб</span>
               <span className="usage-tag">деловой стиль</span>
-              <span className="usage-tag">интерьер</span>
             </div>
           </div>
 
@@ -615,7 +696,6 @@ const ColorTheoryPage = () => {
             <p className="scheme-desc">2-5 соседних цвета в цветовом круге. Создает спокойную, гармоничную композицию. Часто встречается в природе.</p>
             <div className="scheme-usage">
               <span className="usage-tag">повседневный стиль</span>
-              <span className="usage-tag">природные образы</span>
               <span className="usage-tag">спокойствие</span>
             </div>
           </div>
@@ -630,7 +710,6 @@ const ColorTheoryPage = () => {
             <div className="scheme-usage">
               <span className="usage-tag">вечерние образы</span>
               <span className="usage-tag">акценты</span>
-              <span className="usage-tag">спорт</span>
             </div>
           </div>
 
@@ -641,14 +720,14 @@ const ColorTheoryPage = () => {
               <div className="scheme-bar" style={{background: '#FFA502'}}></div>
             </div>
             <h4>СПЛИТ-КОМПЛЕМЕНТАРНАЯ</h4>
-            <p className="scheme-desc">Цвет + два соседа его противоположности. Меньше напряжения, чем в чистой комплементарной, но сохраняет контраст.</p>
+            <p className="scheme-desc">Цвет + два соседа его противоположности. Меньше напряжения, чем в чистой комплементарной.</p>
             <div className="scheme-usage">
               <span className="usage-tag">смелые образы</span>
               <span className="usage-tag">креатив</span>
             </div>
           </div>
 
-          <div className="harmony-scheme-card">
+          <div className="harmony-scheme-card tr">
             <div className="scheme-visual triad-scheme">
               <div className="scheme-bar" style={{background: '#FF4757'}}></div>
               <div className="scheme-bar" style={{background: '#2ED573'}}></div>
@@ -658,10 +737,10 @@ const ColorTheoryPage = () => {
             <p className="scheme-desc">Три цвета на равном расстоянии в цветовом круге. Сбалансированная, яркая, жизнерадостная комбинация.</p>
             <div className="scheme-usage">
               <span className="usage-tag">праздничные образы</span>
-              <span className="usage-tag">детская одежда</span>
+              <span className="usage-tag">детство</span>
             </div>
           </div>
-          <div className="harmony-scheme-card">
+          <div className="harmony-scheme-card tetr">
             <div className="scheme-visual tetrad-scheme">
               <div className="scheme-bar" style={{background: '#FF4757'}}></div>
               <div className="scheme-bar" style={{background: '#FFA502'}}></div>
